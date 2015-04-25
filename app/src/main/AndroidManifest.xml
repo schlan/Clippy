@@ -20,7 +20,7 @@
         </activity>
 
         <service
-            android:name=".FloatingActivity" />
+            android:name=".FloatingService" />
 
     </application>
 

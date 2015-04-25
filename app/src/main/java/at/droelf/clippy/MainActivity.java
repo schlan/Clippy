@@ -7,6 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
+import at.droelf.clippy.backend.AgentService;
+import at.droelf.clippy.backend.source.AgentSource;
+import at.droelf.clippy.backend.source.AgentSourceImpl;
+import at.droelf.clippy.model.AgentType;
+import at.droelf.clippy.model.gui.UiAgent;
+import at.droelf.clippy.model.raw.Agent;
+import at.droelf.clippy.utils.O;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -18,16 +30,11 @@ public class MainActivity extends ActionBarActivity {
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent window = new Intent(MainActivity.this, FloatingActivity.class);
+                Intent window = new Intent(MainActivity.this, FloatingService.class);
                 startService(window);
-
-
-
             }
         });
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="ani_dis_1_dur">150</integer>
+    <integer name="ani_in_1_dur">125</integer>
+    <integer name="ani_in_2_dur">125</integer>
+    <integer name="ani_in_3_dur">125</integer>
+</resources>
