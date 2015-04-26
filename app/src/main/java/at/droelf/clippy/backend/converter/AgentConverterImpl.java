@@ -82,21 +82,30 @@ public class AgentConverterImpl implements AgentConverter {
     }
 
     private List<Integer> convertImageListToId(List<List<Integer>> lists, Agent agent) {
-        final List<Integer> result = new ArrayList<>();
-
         if(lists == null){
-            return new ArrayList<Integer>(){{add(agentMapping.getEmptyFrameId());}};
+            final List<Integer> emptyFrame = new ArrayList<>();
+            for(int i = 0; i < agent.getOverlayCount(); i++){
+                emptyFrame.add(agentMapping.getEmptyFrameId());
+            }
+            return emptyFrame;
         }
 
+        final List<Integer> result = new ArrayList<>();
+
         for(List<Integer> imagePos : lists){
-            result.add(imagePositionToId(
-                getFrameWidth(agent),
-                getFrameHeight(agent),
-                agentMapping.getNumberColumns(),
-                agentMapping.getNumberRows(),
-                imagePos.get(0),
-                imagePos.get(1)
+            result.add(
+                imagePositionToId(
+                    getFrameWidth(agent),
+                    getFrameHeight(agent),
+                    agentMapping.getNumberColumns(),
+                    agentMapping.getNumberRows(),
+                    imagePos.get(0),
+                    imagePos.get(1)
             ));
+        }
+
+        while(result.size() < agent.getOverlayCount()){
+            result.add(agentMapping.getEmptyFrameId());
         }
 
         return result;

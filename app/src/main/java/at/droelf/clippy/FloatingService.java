@@ -43,7 +43,7 @@ public class FloatingService extends Service {
                     .setContentTitle("Clippy")
                     .build();
             startForeground(1, clippy);
-            this.agentController = new AgentController(AgentType.LINKS, getApplicationContext(), agentService);
+            this.agentController = new AgentController(AgentType.GENIUS, getApplicationContext(), agentService);
 
         }else{
             if(agentController.isRunning()){

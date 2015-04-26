@@ -180,6 +180,10 @@ public class AgentController {
                 final AnimationUtil.AnimationDrawableResult animationDrawable = AnimationUtil.getAnimationDrawable(AgentController.this.context, uiAnimation, agent.getOverlayCount());
                 final List<AnimationDrawable> animationDrawables = animationDrawable.getAnimationDrawables();
 
+                for(ImageView imageView : imageLayer){
+                    imageView.setBackground(context.getResources().getDrawable(agentType.getAgentMapping().getEmptyFrameId()));
+                }
+
                 final CustomAnimationDrawableNew firstLayer = new CustomAnimationDrawableNew(animationDrawable.getAnimationDrawables().get(0)){
                     @Override
                     public void onAnimationFinish() {
@@ -195,13 +199,11 @@ public class AgentController {
                     imageLayer.get(i).setBackground(animationDrawables.get(i));
                 }
 
-                //snd(animationDrawable.getSoundMappings());
                 for(ImageView imageView : imageLayer){
                     ((AnimationDrawable)imageView.getBackground()).start();
                 }
 
                 startSoundHandler(animationDrawable.getSoundMappings());
-
             }
         }
     }

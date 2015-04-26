@@ -66,6 +66,7 @@ public class AnimationUtil {
 
         for(UiFrame uiFrame : frames){
             final List<Integer> imageIds = uiFrame.getImageIds();
+
             for(int j = 0; j < imageIds.size(); j++){
                 final Drawable drawable = context.getResources().getDrawable(imageIds.get(j));
                 drawables.get(j).addFrame(drawable, uiFrame.getDuration());
