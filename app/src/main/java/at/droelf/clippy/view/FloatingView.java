@@ -2,6 +2,7 @@ package at.droelf.clippy.view;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -89,7 +90,12 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             if(FloatingView.this.floatingViewCLickListener != null){
-                FloatingView.this.floatingViewCLickListener.onSingleTap(FloatingView.this);
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        FloatingView.this.floatingViewCLickListener.onSingleTap(FloatingView.this);
+                    }
+                });
             }
             return super.onSingleTapConfirmed(e);
         }
@@ -97,7 +103,12 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
         @Override
         public void onLongPress(MotionEvent e) {
             if(FloatingView.this.floatingViewCLickListener != null){
-                FloatingView.this.floatingViewCLickListener.onLongPress(FloatingView.this);
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        FloatingView.this.floatingViewCLickListener.onLongPress(FloatingView.this);
+                    }
+                });
             }
             super.onLongPress(e);
         }
@@ -105,7 +116,12 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             if(FloatingView.this.floatingViewCLickListener != null){
-                FloatingView.this.floatingViewCLickListener.onDoubleTap(FloatingView.this);
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        FloatingView.this.floatingViewCLickListener.onDoubleTap(FloatingView.this);
+                    }
+                });
             }
             return super.onDoubleTap(e);
         }

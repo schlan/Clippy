@@ -2,6 +2,7 @@ package at.droelf.clippy;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -83,6 +84,7 @@ public class AgentController {
 
         frameLayout.addView(progressBar);
         floatingView.addView(frameLayout);
+
     }
 
     private void displayAgent(O<UiAgent> agentOption){
