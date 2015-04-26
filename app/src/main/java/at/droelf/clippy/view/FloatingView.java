@@ -33,7 +33,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
-        this.layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+        this.layoutParams.gravity = Gravity.CENTER;
 
         this.setOnTouchListener(this);
 

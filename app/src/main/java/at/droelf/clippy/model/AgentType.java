@@ -13,7 +13,7 @@ public enum AgentType {
     private AgentMapping agentMapping;
 
     AgentType(String assetNamem, AgentMapping agentMapping) {
-        this.assetName = assetName;
+        this.assetName = assetNamem;
         this.agentMapping = agentMapping;
     }
 
