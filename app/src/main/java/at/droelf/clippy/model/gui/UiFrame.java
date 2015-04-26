@@ -7,19 +7,18 @@ public class UiFrame {
     private final int duration;
     private final List<Integer> imageIds;
 
-    private final int exitBranch;
-    private final List<UiBranches> branches;
+    private final Integer exitBranch;
+    private final List<UiBranch> branches;
 
     private final Integer soundId;
 
-    public UiFrame(int duration, List<Integer> imageIds, int exitBranch, List<UiBranches> branches, Integer soundId) {
+    public UiFrame(int duration, List<Integer> imageIds, Integer exitBranch, List<UiBranch> branches, Integer soundId) {
         this.duration = duration;
         this.imageIds = imageIds;
         this.exitBranch = exitBranch;
         this.branches = branches;
         this.soundId = soundId;
     }
-
 
     public int getDuration() {
         return duration;
@@ -29,11 +28,11 @@ public class UiFrame {
         return imageIds;
     }
 
-    public int getExitBranch() {
+    public Integer getExitBranch() {
         return exitBranch;
     }
 
-    public List<UiBranches> getBranches() {
+    public List<UiBranch> getBranches() {
         return branches;
     }
 

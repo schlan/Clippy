@@ -10,9 +10,12 @@ import at.droelf.clippy.backend.converter.mapping.AgentMappingFactory;
 import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.model.gui.UiAgent;
 import at.droelf.clippy.model.gui.UiAnimation;
+import at.droelf.clippy.model.gui.UiBranch;
 import at.droelf.clippy.model.gui.UiFrame;
 import at.droelf.clippy.model.raw.Agent;
 import at.droelf.clippy.model.raw.Animation;
+import at.droelf.clippy.model.raw.Branch;
+import at.droelf.clippy.model.raw.Branching;
 import at.droelf.clippy.model.raw.Frame;
 
 public class AgentConverterImpl implements AgentConverter {
@@ -54,7 +57,7 @@ public class AgentConverterImpl implements AgentConverter {
                     frame.getDuration(),
                     convertImageListToId(frame.getImages(), agent),
                     frame.getExitBranch(),
-                    null,
+                    convetBranchingToUiBranches(frame.getBranching()),
                     (frame.getSound() != null ) ? agentMapping.getSoundMapping()[frame.getSound() - 1] : null
             );
             uiAnimationList.add(uiFrame);
@@ -63,6 +66,20 @@ public class AgentConverterImpl implements AgentConverter {
         return new UiAnimation(uiAnimationList);
     }
 
+
+    private List<UiBranch> convetBranchingToUiBranches(Branching branching){
+        if(branching == null){
+            return null;
+        }
+
+        final List<UiBranch> uiBranches = new ArrayList<>();
+        final List<Branch> branches = branching.getBranches();
+        for(Branch branch : branches){
+           uiBranches.add(new UiBranch(branch.getFrameIndex(), branch.getWeight()));
+        }
+
+        return uiBranches;
+    }
 
     private List<Integer> convertImageListToId(List<List<Integer>> lists, Agent agent) {
         final List<Integer> result = new ArrayList<>();

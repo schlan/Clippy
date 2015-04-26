@@ -9,7 +9,7 @@ public class Frame {
     private final int duration;
     private final List<List<Integer>> images;
     private final Integer sound;
-    private final int exitBranch;
+    private final Integer exitBranch;
     private final Branching branching;
 
     @JsonCreator
@@ -17,7 +17,7 @@ public class Frame {
             @JsonProperty("duration") int duration,
             @JsonProperty("images") List<List<Integer>> images,
             @JsonProperty("sound") Integer sound,
-            @JsonProperty("exitBranch") int exitBranch,
+            @JsonProperty("exitBranch") Integer exitBranch,
             @JsonProperty("branching") Branching branching) {
         this.duration = duration;
         this.images = images;
@@ -38,7 +38,7 @@ public class Frame {
         return sound;
     }
 
-    public int getExitBranch() {
+    public Integer getExitBranch() {
         return exitBranch;
     }
 

@@ -22,7 +22,9 @@ import at.droelf.clippy.backend.AgentService;
 import at.droelf.clippy.backend.source.AgentSourceImpl;
 import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.model.gui.UiAgent;
+import at.droelf.clippy.model.gui.UiAnimation;
 import at.droelf.clippy.model.gui.UiFrame;
+import at.droelf.clippy.utils.AnimationUtil;
 import at.droelf.clippy.utils.O;
 import at.droelf.clippy.view.CustomAnimationDrawableNew;
 import at.droelf.clippy.view.FloatingView;
@@ -68,7 +70,7 @@ public class FloatingService extends Service {
 
     private void postHandler(){
         Random random = new Random();
-        int i = random.nextInt(10000) + 5000;
+        int i = random.nextInt(5000) + 2000;
         System.out.println("---- start handler: " + i);
         handler.postDelayed(new Runnable() {
             @Override
@@ -76,74 +78,54 @@ public class FloatingService extends Service {
                 System.out.println("----- handler starts");
 
                 if(imageView != null){
-                    Return animationDrawable = getAnimationDrawable();
-                    final CustomAnimationDrawableNew c = new CustomAnimationDrawableNew(animationDrawable.animationDrawable){
+                    final UiAnimation uiAnimation = getAnimationDrawable(AgentType.CLIPPY);
+                    final AnimationUtil.AnimationDrawableResult animationDrawable = AnimationUtil.getAnimationDrawable(FloatingService.this.getApplicationContext(), uiAnimation, 1);//TODO
+
+                    final CustomAnimationDrawableNew c = new CustomAnimationDrawableNew(animationDrawable.getAnimationDrawables().get(0)){
                         @Override
                         public void onAnimationFinish() {
                             postHandler();
                         }
                     };
                     imageView.setBackground(c);
-                    snd(animationDrawable.soundMap);
+                    snd(animationDrawable.getSoundMappings());
                     c.start();
                 }
             }
         }, i);
     }
 
-    private void snd(final Map<Long, Integer> soundMap){
-        for(final Long time : soundMap.keySet()){
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    MediaPlayer.create(FloatingService.this.getApplicationContext(), soundMap.get(time)).start();
-                }
-            }, time);
+    private void snd(final List<AnimationUtil.SoundMapping> soundMap){
+        for(AnimationUtil.SoundMapping soundMapping : soundMap){
+            new Handler().postDelayed(new MediaRunnable(soundMapping.getSoundId()), soundMapping.getTime());
         }
     }
 
-    private Return getAnimationDrawable(){
+    class MediaRunnable implements Runnable{
+
+        private final int sound;
+
+        MediaRunnable(int sound) {
+            this.sound = sound;
+        }
+
+        @Override
+        public void run() {
+            MediaPlayer.create(FloatingService.this.getApplicationContext(), sound).start();
+        }
+    }
+
+    private UiAnimation getAnimationDrawable(AgentType agentType){
         final AgentService agentService = new AgentService(new AgentSourceImpl(getApplicationContext()));
-        final O<UiAgent> uiAgent = agentService.getUiAgent(AgentType.CLIPPY);
-
-        final AnimationDrawable animationDrawable = new AnimationDrawable();
-        animationDrawable.setOneShot(true);
-
-        final Map<Long, Integer> soundMap = new HashMap<>();
-        long time = 0;
+        final O<UiAgent> uiAgent = agentService.getUiAgent(agentType);
 
         if(uiAgent.isSuccess()){
-
-
-            final UiAgent data = uiAgent.getData();
-
-            final ArrayList<String> keys = new ArrayList<>(data.getAnimations().keySet());
+            final ArrayList<String> keys = new ArrayList<>(uiAgent.getData().getAnimations().keySet());
             int i = new Random().nextInt(keys.size() - 1) + 1;
-
-            final List<UiFrame> sendMail = data.getAnimations().get(keys.get(i)).getUiFrames();
-            for(UiFrame frame : sendMail){
-                if(frame.getSoundId() != null){
-                    soundMap.put(time, frame.getSoundId());
-                }
-                final Drawable drawable =getApplicationContext().getResources().getDrawable(frame.getImageIds().get(0));
-                animationDrawable.addFrame(drawable, frame.getDuration());
-
-                time =+ frame.getDuration();
-            }
-
+            return uiAgent.getData().getAnimations().get(keys.get(i));
         }
-        return new Return(animationDrawable, soundMap);
-    }
+        return null;
 
-
-    class Return {
-        AnimationDrawable animationDrawable;
-        Map<Long, Integer> soundMap;
-
-        Return(AnimationDrawable animationDrawable, Map<Long, Integer> soundMap) {
-            this.animationDrawable = animationDrawable;
-            this.soundMap = soundMap;
-        }
     }
 
     @Override

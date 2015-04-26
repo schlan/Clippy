@@ -2,8 +2,6 @@ package at.droelf.clippy.view;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -11,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 public class FloatingView extends FrameLayout implements View.OnTouchListener {
 
     private final GestureDetector gestureDetector;
     private final WindowManager.LayoutParams layoutParams;
     private final WindowManager windowManager;
+
+    private FloatingViewCLickListener floatingViewCLickListener;
 
     private View childView = null;
 
@@ -77,6 +75,10 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
         return gestureDetected || motionDetected;
     }
 
+    public void setFloatingViewCLickListener(FloatingViewCLickListener floatingViewCLickListener){
+        this.floatingViewCLickListener = floatingViewCLickListener;
+    }
+
     private void updateLocation(int x, int y){
         layoutParams.x = x;
         layoutParams.y = y;
@@ -86,30 +88,34 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
     class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            Toast.makeText(FloatingView.this.getContext(), "click", Toast.LENGTH_LONG).show();
-
-            if(childView != null && childView instanceof ImageView){
-                Drawable background = childView.getBackground();
-                if(background != null && background instanceof AnimationDrawable){
-                    ((AnimationDrawable)background).stop();
-                    ((AnimationDrawable)background).start();
-                }
+            if(FloatingView.this.floatingViewCLickListener != null){
+                FloatingView.this.floatingViewCLickListener.onSingleTap(FloatingView.this);
             }
-
             return super.onSingleTapConfirmed(e);
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
-            Toast.makeText(FloatingView.this.getContext(), "long click", Toast.LENGTH_LONG).show();
+            if(FloatingView.this.floatingViewCLickListener != null){
+                FloatingView.this.floatingViewCLickListener.onLongPress(FloatingView.this);
+            }
             super.onLongPress(e);
         }
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            Toast.makeText(FloatingView.this.getContext(), "double click", Toast.LENGTH_LONG).show();
+            if(FloatingView.this.floatingViewCLickListener != null){
+                FloatingView.this.floatingViewCLickListener.onDoubleTap(FloatingView.this);
+            }
             return super.onDoubleTap(e);
         }
+    }
+
+
+    public interface FloatingViewCLickListener {
+        public void onSingleTap(View v);
+        public void onDoubleTap(View v);
+        public void onLongPress(View v);
     }
 
 }
