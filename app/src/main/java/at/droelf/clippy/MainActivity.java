@@ -1,6 +1,8 @@
 package at.droelf.clippy;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import at.droelf.clippy.backend.AgentService;
 import at.droelf.clippy.backend.source.AgentSource;
 import at.droelf.clippy.backend.source.AgentSourceImpl;
+import at.droelf.clippy.broadcastreceiver.DeviceUnlock;
 import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.model.gui.UiAgent;
 import at.droelf.clippy.model.raw.Agent;
@@ -25,6 +28,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        BroadcastReceiver mReceiver = new DeviceUnlock();
+        registerReceiver(mReceiver, filter);
+
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {

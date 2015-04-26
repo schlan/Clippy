@@ -30,6 +30,11 @@ public class AgentMappingFactory {
         public int getEmptyFrameId() {
             return 0;
         }
+
+        @Override
+        public int getFirstFrameId() {
+            return 0;
+        }
     };
 
     public static AgentMapping getMapping(AgentType agentType){

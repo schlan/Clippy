@@ -32,7 +32,8 @@ public class AgentConverterImpl implements AgentConverter {
             agent.getOverlayCount(),
             agent.getFrameSize().get(0),
             agent.getFrameSize().get(1),
-            convertAnimationMap(agent.getAnimations(), agent)
+            convertAnimationMap(agent.getAnimations(), agent),
+            agentMapping.getFirstFrameId()
         );
     }
 

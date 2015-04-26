@@ -972,4 +972,9 @@ public class ClippyMapping implements AgentMapping {
     public int getEmptyFrameId() {
         return R.drawable.clippy_0917;
     }
+
+    @Override
+    public int getFirstFrameId() {
+        return R.drawable.clippy_0000;
+    }
 }

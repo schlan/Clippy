@@ -13,11 +13,14 @@ public class UiAgent {
 
     private final Map<String, UiAnimation> animations;
 
-    public UiAgent(int overlayCount, int frameWidth, int frameHeight, Map<String, UiAnimation> animations) {
+    private final int firstImage;
+
+    public UiAgent(int overlayCount, int frameWidth, int frameHeight, Map<String, UiAnimation> animations, int firstImage) {
         this.overlayCount = overlayCount;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
         this.animations = animations;
+        this.firstImage = firstImage;
     }
 
     public int getOverlayCount() {
@@ -34,5 +37,9 @@ public class UiAgent {
 
     public Map<String, UiAnimation> getAnimations() {
         return animations;
+    }
+
+    public int getFirstImage() {
+        return firstImage;
     }
 }

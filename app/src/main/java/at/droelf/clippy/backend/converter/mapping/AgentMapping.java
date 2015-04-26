@@ -7,5 +7,6 @@ public interface AgentMapping {
     public int getNumberRows();
     public int getNumberColumns();
     public int getEmptyFrameId();
+    public int getFirstFrameId();
 
 }
