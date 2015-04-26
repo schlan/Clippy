@@ -54,7 +54,8 @@ public class AgentConverterImpl implements AgentConverter {
                     frame.getDuration(),
                     convertImageListToId(frame.getImages(), agent),
                     frame.getExitBranch(),
-                    null
+                    null,
+                    (frame.getSound() != null ) ? agentMapping.getSoundMapping()[frame.getSound() - 1] : null
             );
             uiAnimationList.add(uiFrame);
         }

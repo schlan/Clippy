@@ -8,7 +8,7 @@ import java.util.List;
 public class Frame {
     private final int duration;
     private final List<List<Integer>> images;
-    private final int sound;
+    private final Integer sound;
     private final int exitBranch;
     private final Branching branching;
 
@@ -16,7 +16,7 @@ public class Frame {
     public Frame(
             @JsonProperty("duration") int duration,
             @JsonProperty("images") List<List<Integer>> images,
-            @JsonProperty("sound") int sound,
+            @JsonProperty("sound") Integer sound,
             @JsonProperty("exitBranch") int exitBranch,
             @JsonProperty("branching") Branching branching) {
         this.duration = duration;
@@ -34,7 +34,7 @@ public class Frame {
         return images;
     }
 
-    public int getSound() {
+    public Integer getSound() {
         return sound;
     }
 

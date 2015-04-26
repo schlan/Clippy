@@ -929,9 +929,33 @@ public class ClippyMapping implements AgentMapping {
             R.drawable.clippy_0917
     };
 
+    private final int[] soundMapping = {
+            R.raw.clippy_snd_01,
+            R.raw.clippy_snd_02,
+            R.raw.clippy_snd_03,
+            R.raw.clippy_snd_04,
+            R.raw.clippy_snd_05,
+            R.raw.clippy_snd_06,
+            R.raw.clippy_snd_07,
+            R.raw.clippy_snd_08,
+            R.raw.clippy_snd_09,
+            R.raw.clippy_snd_10,
+            R.raw.clippy_snd_11,
+            R.raw.clippy_snd_12,
+            R.raw.clippy_snd_13,
+            R.raw.clippy_snd_14,
+            R.raw.clippy_snd_15
+    };
+
+
     @Override
     public int[] getMapping() {
         return mapping;
+    }
+
+    @Override
+    public int[] getSoundMapping() {
+        return soundMapping;
     }
 
     @Override

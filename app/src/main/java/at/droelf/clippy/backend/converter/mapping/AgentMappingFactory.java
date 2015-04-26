@@ -12,6 +12,11 @@ public class AgentMappingFactory {
         }
 
         @Override
+        public int[] getSoundMapping() {
+            return new int[0];
+        }
+
+        @Override
         public int getNumberRows() {
             return 0;
         }
