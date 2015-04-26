@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import at.droelf.clippy.backend.converter.mapping.AgentMapping;
-import at.droelf.clippy.backend.converter.mapping.AgentMappingFactory;
 import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.model.gui.UiAgent;
 import at.droelf.clippy.model.gui.UiAnimation;
@@ -23,7 +22,7 @@ public class AgentConverterImpl implements AgentConverter {
     private final AgentMapping agentMapping;
 
     public AgentConverterImpl(AgentType agentType) {
-        this.agentMapping = AgentMappingFactory.getMapping(agentType);
+        this.agentMapping = agentType.getAgentMapping();
     }
 
     @Override
