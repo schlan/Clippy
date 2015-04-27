@@ -35,7 +35,7 @@ public class FloatingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        final AgentType agentType = AgentType.GENIUS;
+        final AgentType agentType = AgentType.ROCKY;
 
         if(agentController == null){
             final Notification clippy = new NotificationCompat.Builder(getApplicationContext())
