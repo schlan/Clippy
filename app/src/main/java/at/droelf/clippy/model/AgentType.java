@@ -2,6 +2,7 @@ package at.droelf.clippy.model;
 
 import at.droelf.clippy.backend.converter.mapping.AgentMapping;
 import at.droelf.clippy.backend.converter.mapping.ClippyMapping;
+import at.droelf.clippy.backend.converter.mapping.F1Mapping;
 import at.droelf.clippy.backend.converter.mapping.GeniusMapping;
 import at.droelf.clippy.backend.converter.mapping.LinksMapping;
 import at.droelf.clippy.backend.converter.mapping.RockyMapping;
@@ -11,7 +12,8 @@ public enum AgentType {
     CLIPPY("agent_clippy.json", new ClippyMapping()),
     LINKS("agent_links.json", new LinksMapping()),
     GENIUS("agent_genius.json", new GeniusMapping()),
-    ROCKY("agent_rocky.json", new RockyMapping())
+    ROCKY("agent_rocky.json", new RockyMapping()),
+    F1("agent_f1.json", new F1Mapping())
     ;
 
     public static String KEY = "extra_agenttype";

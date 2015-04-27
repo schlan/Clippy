@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -27,9 +28,10 @@ public class FloatingService extends Service {
                     final AgentType agentType = (AgentType) intent.getSerializableExtra(AgentType.KEY);
 
                     final Notification clippy = new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(R.drawable.clippy_0000)
+                            .setSmallIcon(agentType.getAgentMapping().getFirstFrameId())
                             .setContentTitle("Clippy")
                             .setContentText(agentType.toString())
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), agentType.getAgentMapping().getFirstFrameId()))
                             .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), 0))
                             .build();
                     startForeground(1, clippy);

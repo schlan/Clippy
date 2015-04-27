@@ -131,7 +131,7 @@ public class AgentControllerImpl implements AgentController{
     private void startSoundHandler(final List<AnimationUtil.SoundMapping> soundMap){
         isAlive();
         for(AnimationUtil.SoundMapping soundMapping : soundMap){
-            handler.postDelayed(new SoundRunnable(soundMapping.getSoundId()), soundMapping.getTime());
+            new Handler().postDelayed(new SoundRunnable(soundMapping.getSoundId()), soundMapping.getTime());
         }
     }
 
