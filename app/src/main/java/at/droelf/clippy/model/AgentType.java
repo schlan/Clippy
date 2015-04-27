@@ -14,6 +14,8 @@ public enum AgentType {
     ROCKY("agent_rocky.json", new RockyMapping())
     ;
 
+    public static String KEY = "extra_agenttype";
+
     private String assetName;
     private AgentMapping agentMapping;
 

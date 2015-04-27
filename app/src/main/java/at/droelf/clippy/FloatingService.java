@@ -8,46 +8,24 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
-import at.droelf.clippy.backend.AgentService;
-import at.droelf.clippy.backend.AgentServiceImpl;
-import at.droelf.clippy.backend.source.AgentSourceImpl;
 import at.droelf.clippy.model.AgentType;
 
 public class FloatingService extends Service {
 
-    public enum Command{
-        Show, Start, Stop, Kill;
-
-        public static String KEY = "COMMAND";
-    }
-
-    private AgentService agentService;
-
     private final IBinder mBinder = new LocalBinder();
-
     private AgentController agentController;
 
-    public class LocalBinder extends Binder {
-        FloatingService getService() {
-            return FloatingService.this;
-        }
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        this.agentService = new AgentServiceImpl(new AgentSourceImpl(this));
-    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        final AgentType agentType = AgentType.ROCKY;
         final Command command = (Command) intent.getSerializableExtra(Command.KEY);
 
         switch (command){
             case Show:
                 if(agentController == null){
+                    final AgentType agentType = (AgentType) intent.getSerializableExtra(AgentType.KEY);
+
                     final Notification clippy = new NotificationCompat.Builder(getApplicationContext())
                             .setSmallIcon(R.drawable.clippy_0000)
                             .setContentTitle("Clippy")
@@ -55,7 +33,7 @@ public class FloatingService extends Service {
                             .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), 0))
                             .build();
                     startForeground(1, clippy);
-                    this.agentController = new AgentControllerImpl(agentType, getApplicationContext(), agentService);
+                    this.agentController = new AgentControllerImpl(agentType, getApplicationContext(), Global.INSTANCE.getAgentService());
                 }
 
                 break;
@@ -88,6 +66,20 @@ public class FloatingService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
+    }
+
+
+
+    public class LocalBinder extends Binder {
+        FloatingService getService() {
+            return FloatingService.this;
+        }
+    }
+
+    public enum Command{
+        Show, Start, Stop, Kill;
+
+        public static String KEY = "COMMAND";
     }
 
 }

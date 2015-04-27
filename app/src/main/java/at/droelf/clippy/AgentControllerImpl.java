@@ -51,7 +51,6 @@ public class AgentControllerImpl implements AgentController{
         this.handler = new Handler();
 
         initView();
-
         loadAgentData.execute(agentType);
     }
 
@@ -117,7 +116,6 @@ public class AgentControllerImpl implements AgentController{
 
         }else{
             //TODO
-            System.out.println("----- error: " + agentOption.getError());
             throw new RuntimeException(agentOption.getError());
         }
     }
@@ -125,7 +123,6 @@ public class AgentControllerImpl implements AgentController{
     private void startAnimation(final UiAgent agent){
         isAlive();
         final long animationDelay = getAnimationDelay();
-        System.out.println("---- start handler: " + animationDelay);
 
         this.animationRunnable = new AnimationRunnable(agent);
         handler.postDelayed(this.animationRunnable, animationDelay);
@@ -159,7 +156,7 @@ public class AgentControllerImpl implements AgentController{
     private AsyncTask<AgentType, Void, O<UiAgent>> loadAgentData = new AsyncTask<AgentType, Void, O<UiAgent>>(){
         @Override
         protected O<UiAgent> doInBackground(AgentType... agentTypes) {
-            return agentService.getUiAgent(agentTypes[0]);
+            return agentService.getUiAgent(context, agentTypes[0]);
         }
 
         @Override
@@ -195,8 +192,6 @@ public class AgentControllerImpl implements AgentController{
 
         @Override
         public void run() {
-            System.out.println("----- handler starts");
-
             if(imageLayer != null && imageLayer.size() > 0 && !killed){
                 final UiAnimation uiAnimation = getRandomAnimation(agent);
                 final AnimationUtil.AnimationDrawableResult animationDrawable = AnimationUtil.getAnimationDrawable(AgentControllerImpl.this.context, uiAnimation, agent.getOverlayCount());

@@ -1,5 +1,7 @@
 package at.droelf.clippy.backend;
 
+import android.content.Context;
+
 import at.droelf.clippy.backend.converter.AgentConverter;
 import at.droelf.clippy.backend.converter.AgentConverterImpl;
 import at.droelf.clippy.backend.source.AgentSource;
@@ -16,8 +18,8 @@ public class AgentServiceImpl implements AgentService {
         this.agentSource = agentSource;
     }
 
-    public O<UiAgent> getUiAgent(AgentType agentType){
-        final O<Agent> agent = agentSource.getAgent(agentType);
+    public O<UiAgent> getUiAgent(Context context, AgentType agentType){
+        final O<Agent> agent = agentSource.getAgent(context, agentType);
         final AgentConverter agentConverter = new AgentConverterImpl(agentType);
 
         if(agent.isSuccess()){

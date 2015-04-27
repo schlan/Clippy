@@ -1,7 +1,6 @@
 package at.droelf.clippy.backend.source;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,15 +14,13 @@ import at.droelf.clippy.model.raw.Agent;
 public class AgentSourceImpl implements AgentSource {
 
     private final ObjectMapper objectMapper;
-    private final Context context;
 
-    public AgentSourceImpl(Context context) {
-        this.context = context;
+    public AgentSourceImpl() {
         this.objectMapper = new ObjectMapper();
     }
 
     @Override
-    public O<Agent> getAgent(AgentType agentType) {
+    public O<Agent> getAgent(Context context, AgentType agentType) {
         try {
             final InputStream open = context.getAssets().open(agentType.getAssetName());
             return new O<>(objectMapper.readValue(open, Agent.class));

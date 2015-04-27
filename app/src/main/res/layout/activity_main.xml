@@ -17,6 +17,11 @@
         android:id="@+id/show"
         android:text="Show and start"/>
 
+    <Spinner
+        android:id="@+id/agent_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
