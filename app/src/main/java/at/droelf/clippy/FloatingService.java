@@ -9,10 +9,17 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import at.droelf.clippy.backend.AgentService;
+import at.droelf.clippy.backend.AgentServiceImpl;
 import at.droelf.clippy.backend.source.AgentSourceImpl;
 import at.droelf.clippy.model.AgentType;
 
 public class FloatingService extends Service {
+
+    public enum Command{
+        Show, Start, Stop, Kill;
+
+        public static String KEY = "COMMAND";
+    }
 
     private AgentService agentService;
 
@@ -29,40 +36,51 @@ public class FloatingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        this.agentService = new AgentService(new AgentSourceImpl(this));
+        this.agentService = new AgentServiceImpl(new AgentSourceImpl(this));
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         final AgentType agentType = AgentType.ROCKY;
+        final Command command = (Command) intent.getSerializableExtra(Command.KEY);
 
-        if(agentController == null){
-            final Notification clippy = new NotificationCompat.Builder(getApplicationContext())
-                    .setSmallIcon(R.drawable.clippy_0000)
-                    .setContentTitle("Clippy")
-                    .setContentText(agentType.toString())
-                    .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), 0))
-                    .build();
-            startForeground(1, clippy);
-            this.agentController = new AgentController(agentType, getApplicationContext(), agentService);
+        switch (command){
+            case Show:
+                if(agentController == null){
+                    final Notification clippy = new NotificationCompat.Builder(getApplicationContext())
+                            .setSmallIcon(R.drawable.clippy_0000)
+                            .setContentTitle("Clippy")
+                            .setContentText(agentType.toString())
+                            .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), 0))
+                            .build();
+                    startForeground(1, clippy);
+                    this.agentController = new AgentControllerImpl(agentType, getApplicationContext(), agentService);
+                }
 
-        }else{
-            if(agentController.isRunning()){
-                agentController.stop();
-            }else{
-                agentController.start();
-            }
+                break;
+
+            case Start:
+                if(agentController != null && !agentController.isRunning()){
+                    agentController.start();
+                }
+                break;
+
+            case Stop:
+                if(agentController != null && agentController.isRunning()){
+                    agentController.stop();
+                }
+                break;
+
+            case Kill:
+                if(agentController != null){
+                    agentController.kill();
+                    this.agentController = null;
+                }
+                stopSelf();
+                break;
         }
-/*
-        final KeyguardManager myKM = (KeyguardManager) FloatingService.this.getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
-                            if( !myKM.inKeyguardRestrictedInputMode()) {
- */
-        if(intent.getBooleanExtra("unlock", false)){
-            //postHandler();
 
-            //TODO
-        }
         return START_STICKY;
     }
 

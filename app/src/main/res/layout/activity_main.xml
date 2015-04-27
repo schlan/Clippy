@@ -14,7 +14,26 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/show"
+        android:text="Show and start"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/start"
-        android:text="Clippy"/>
+        android:text="Start"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stop"
+        android:text="Stop"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/kill"
+        android:text="Kill"/>
 
 </LinearLayout>

@@ -24,6 +24,8 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
     private int xDelta;
     private int yDelta;
 
+    private boolean killed = false;
+
     public FloatingView(Context context) {
         super(context);
         this.gestureDetector = new GestureDetector(context, new GestureListener());
@@ -41,8 +43,16 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
         this.windowManager.addView(this, layoutParams);
     }
 
+    public void kill(){
+        isAlive();
+        this.killed = true;
+        this.windowManager.removeViewImmediate(this);
+        this.floatingViewCLickListener = null;
+    }
+
     @Override
     public void addView(View v){
+        isAlive();
         if(v == null){
             throw new IllegalArgumentException("Provided view is null :(");
         }
@@ -77,6 +87,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
     }
 
     public void setFloatingViewCLickListener(FloatingViewCLickListener floatingViewCLickListener){
+        isAlive();
         this.floatingViewCLickListener = floatingViewCLickListener;
     }
 
@@ -124,6 +135,12 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
                 });
             }
             return super.onDoubleTap(e);
+        }
+    }
+
+    private void isAlive(){
+        if(killed){
+            throw new RuntimeException("FlatingView is dead x.x");
         }
     }
 

@@ -9,18 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-
-import at.droelf.clippy.backend.AgentService;
-import at.droelf.clippy.backend.source.AgentSource;
-import at.droelf.clippy.backend.source.AgentSourceImpl;
 import at.droelf.clippy.broadcastreceiver.DeviceUnlock;
-import at.droelf.clippy.model.AgentType;
-import at.droelf.clippy.model.gui.UiAgent;
-import at.droelf.clippy.model.raw.Agent;
-import at.droelf.clippy.utils.O;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -35,13 +24,46 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.show).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent window = new Intent(MainActivity.this, FloatingService.class);
+                window.putExtra(FloatingService.Command.KEY, FloatingService.Command.Show);
+                startService(window);
+            }
+        });
+
+
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent window = new Intent(MainActivity.this, FloatingService.class);
+                window.putExtra(FloatingService.Command.KEY, FloatingService.Command.Start);
                 startService(window);
             }
         });
+
+
+        findViewById(R.id.stop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent window = new Intent(MainActivity.this, FloatingService.class);
+                window.putExtra(FloatingService.Command.KEY, FloatingService.Command.Stop);
+                startService(window);
+            }
+        });
+
+
+        findViewById(R.id.kill).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent window = new Intent(MainActivity.this, FloatingService.class);
+                window.putExtra(FloatingService.Command.KEY, FloatingService.Command.Kill);
+                startService(window);
+            }
+        });
+
+
     }
 
     @Override
