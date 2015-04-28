@@ -40,6 +40,7 @@ public class AgentControllerImpl implements AgentController{
     private AnimationRunnable animationRunnable;
 
     private AtomicBoolean animationIsRunning = new AtomicBoolean(true);
+    private AtomicBoolean isMute = new AtomicBoolean(false);
     private boolean killed = false;
 
 
@@ -85,6 +86,26 @@ public class AgentControllerImpl implements AgentController{
     public boolean isRunning(){
         isAlive();
         return animationIsRunning.get();
+    }
+
+    @Override
+    public void mute() {
+        isMute.set(true);
+    }
+
+    @Override
+    public void unMute() {
+        isMute.set(false);
+    }
+
+    @Override
+    public boolean isMute() {
+        return isMute.get();
+    }
+
+    @Override
+    public AgentType getAgentType() {
+        return agentType;
     }
 
     private void initView(){
@@ -175,7 +196,7 @@ public class AgentControllerImpl implements AgentController{
 
         @Override
         public void run() {
-            if(animationIsRunning.get() && !killed){
+            if(animationIsRunning.get() && !killed && !isMute.get()){
                 MediaPlayer.create(AgentControllerImpl.this.context, sound).start();
             }
         }

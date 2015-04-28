@@ -1,8 +1,10 @@
 package at.droelf.clippy;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
@@ -10,6 +12,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import at.droelf.clippy.model.AgentType;
+import at.droelf.clippy.view.NotificationHelper;
 
 public class FloatingService extends Service {
 
@@ -20,48 +23,67 @@ public class FloatingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        final Command command = (Command) intent.getSerializableExtra(Command.KEY);
+        if(intent.hasExtra(Command.KEY)){
 
-        switch (command){
-            case Show:
-                if(agentController == null){
-                    final AgentType agentType = (AgentType) intent.getSerializableExtra(AgentType.KEY);
+            final Command command = (Command) intent.getSerializableExtra(Command.KEY);
 
-                    final Notification clippy = new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(agentType.getAgentMapping().getFirstFrameId())
-                            .setContentTitle("Clippy")
-                            .setContentText(agentType.toString())
-                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), agentType.getAgentMapping().getFirstFrameId()))
-                            .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), 0))
-                            .build();
-                    startForeground(1, clippy);
-                    this.agentController = new AgentControllerImpl(agentType, getApplicationContext(), Global.INSTANCE.getAgentService());
-                }
+            switch (command){
+                case Show:
+                    if(agentController == null){
 
-                break;
+                        final AgentType agentType = (AgentType) intent.getSerializableExtra(AgentType.KEY);
+                        this.agentController = new AgentControllerImpl(agentType, getApplicationContext(), Global.INSTANCE.getAgentService());
 
-            case Start:
-                if(agentController != null && !agentController.isRunning()){
-                    agentController.start();
-                }
-                break;
+//                        //TODO mute stuff
+//                        startForeground(1, NotificationHelper.getNotification(this, agentType, true, false));
+                        startForeground(123, NotificationHelper.getNotification(this, agentController.getAgentType(), agentController.isRunning(), agentController.isMute()));
 
-            case Stop:
-                if(agentController != null && agentController.isRunning()){
-                    agentController.stop();
-                }
-                break;
+                    }
 
-            case Kill:
-                if(agentController != null){
-                    agentController.kill();
-                    this.agentController = null;
-                }
-                stopSelf();
-                break;
+                    break;
+
+                case Start:
+                    if(agentController != null && !agentController.isRunning()){
+                        agentController.start();
+                    }
+                    break;
+
+                case Stop:
+                    if(agentController != null && agentController.isRunning()){
+                        agentController.stop();
+                    }
+                    break;
+
+                case Kill:
+                    if(agentController != null){
+                        agentController.kill();
+                        this.agentController = null;
+                    }
+                    stopSelf();
+                    break;
+
+                case Mute:
+                    if(agentController != null && !agentController.isMute()){
+                        agentController.mute();
+                    }
+                    break;
+
+                case UnMute:
+                    if(agentController != null && agentController.isMute()){
+                        agentController.unMute();
+                    }
+                    break;
+            }
+
+            //Start Foregroundservice + Notification
+            if(agentController != null){
+                final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                //mNotificationManager.cancel(123);
+                mNotificationManager.notify(123, NotificationHelper.getNotification(this, agentController.getAgentType(), agentController.isRunning(), agentController.isMute()));
+            }
         }
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
 
@@ -71,7 +93,6 @@ public class FloatingService extends Service {
     }
 
 
-
     public class LocalBinder extends Binder {
         FloatingService getService() {
             return FloatingService.this;
@@ -79,7 +100,7 @@ public class FloatingService extends Service {
     }
 
     public enum Command{
-        Show, Start, Stop, Kill;
+        Show, Start, Stop, Kill, Mute, UnMute;
 
         public static String KEY = "COMMAND";
     }
