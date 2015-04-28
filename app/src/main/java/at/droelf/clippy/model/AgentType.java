@@ -1,11 +1,6 @@
 package at.droelf.clippy.model;
 
-import at.droelf.clippy.backend.converter.mapping.AgentMapping;
-import at.droelf.clippy.backend.converter.mapping.ClippyMapping;
-import at.droelf.clippy.backend.converter.mapping.F1Mapping;
-import at.droelf.clippy.backend.converter.mapping.GeniusMapping;
-import at.droelf.clippy.backend.converter.mapping.LinksMapping;
-import at.droelf.clippy.backend.converter.mapping.RockyMapping;
+import at.droelf.clippy.backend.converter.mapping.*;
 
 public enum AgentType {
 

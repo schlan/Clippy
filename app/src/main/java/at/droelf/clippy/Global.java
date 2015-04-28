@@ -5,6 +5,7 @@ import at.droelf.clippy.backend.AgentServiceImpl;
 import at.droelf.clippy.backend.source.AgentSource;
 import at.droelf.clippy.backend.source.AgentSourceImpl;
 
+
 public enum Global {
     INSTANCE;
 
