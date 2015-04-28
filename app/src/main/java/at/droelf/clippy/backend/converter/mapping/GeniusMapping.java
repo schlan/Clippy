@@ -755,7 +755,7 @@ public class GeniusMapping implements AgentMapping{
     }
 
     @Override
-    public int[] getSoundMapping() {
+    public int[] getSOUND_MAPPING() {
         return SOUND_MAPPING;
     }
 
@@ -765,7 +765,7 @@ public class GeniusMapping implements AgentMapping{
     }
 
     @Override
-    public int getNumberColumns() {
+    public int getNUMBER_COLUMNS() {
         return numberColumns;
     }
 

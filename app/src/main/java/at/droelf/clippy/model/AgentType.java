@@ -8,7 +8,8 @@ public enum AgentType {
     LINKS("agent_links.json", new LinksMapping()),
     GENIUS("agent_genius.json", new GeniusMapping()),
     ROCKY("agent_rocky.json", new RockyMapping()),
-    F1("agent_f1.json", new F1Mapping())
+    F1("agent_f1.json", new F1Mapping()),
+    BONZI("agent_bonzi.json", new BonziMapping())
     ;
 
     public static String KEY = "extra_agenttype";

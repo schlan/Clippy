@@ -5,10 +5,10 @@ import at.droelf.clippy.R;
 
 public class ClippyMapping implements AgentMapping {
 
-    private final int numberColumns = 27;
-    private final int numberRows = 34;
+    private final static int NUMBER_COLUMNS = 27;
+    private final static int NUMBER_ROWS = 34;
 
-    private final int[] mapping = {
+    private final static int[] IMAGE_MAPPING = {
             R.drawable.clippy_0000,
             R.drawable.clippy_0001,
             R.drawable.clippy_0002,
@@ -929,7 +929,7 @@ public class ClippyMapping implements AgentMapping {
             R.drawable.clippy_0917
     };
 
-    private final int[] soundMapping = {
+    private final static int[] SOUND_MAPPING = {
             R.raw.clippy_snd_01,
             R.raw.clippy_snd_02,
             R.raw.clippy_snd_03,
@@ -950,22 +950,22 @@ public class ClippyMapping implements AgentMapping {
 
     @Override
     public int[] getMapping() {
-        return mapping;
+        return IMAGE_MAPPING;
     }
 
     @Override
-    public int[] getSoundMapping() {
-        return soundMapping;
+    public int[] getSOUND_MAPPING() {
+        return SOUND_MAPPING;
     }
 
     @Override
     public int getNumberRows() {
-        return numberRows;
+        return NUMBER_ROWS;
     }
 
     @Override
-    public int getNumberColumns() {
-        return numberColumns;
+    public int getNUMBER_COLUMNS() {
+        return NUMBER_COLUMNS;
     }
 
     @Override
