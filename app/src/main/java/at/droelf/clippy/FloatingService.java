@@ -1,24 +1,20 @@
 package at.droelf.clippy;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 
 import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.view.NotificationHelper;
+import timber.log.Timber;
 
 public class FloatingService extends Service {
 
     private final IBinder mBinder = new LocalBinder();
     private AgentController agentController;
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -26,6 +22,7 @@ public class FloatingService extends Service {
         if(intent.hasExtra(Command.KEY)){
 
             final Command command = (Command) intent.getSerializableExtra(Command.KEY);
+            Timber.d("onStartCommand with command: %s", command);
 
             switch (command){
                 case Show:

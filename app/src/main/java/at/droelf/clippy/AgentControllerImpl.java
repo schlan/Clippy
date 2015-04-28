@@ -23,6 +23,7 @@ import at.droelf.clippy.utils.AnimationUtil;
 import at.droelf.clippy.utils.O;
 import at.droelf.clippy.view.CustomAnimationDrawableNew;
 import at.droelf.clippy.view.FloatingView;
+import timber.log.Timber;
 
 public class AgentControllerImpl implements AgentController{
 
@@ -67,6 +68,8 @@ public class AgentControllerImpl implements AgentController{
     public void stop(){
         isAlive();
         animationIsRunning.set(false);
+        handler.removeCallbacks(animationRunnable);
+
         for(ImageView imageView : imageLayer){
             if(imageView != null && imageView.getBackground() != null && imageView.getBackground() instanceof  AnimationDrawable){
                 ((AnimationDrawable)imageView.getBackground()).stop();
@@ -110,6 +113,8 @@ public class AgentControllerImpl implements AgentController{
 
     private void initView(){
         isAlive();
+        Timber.d("Init view");
+
         frameLayout = new FrameLayout(context);
         progressBar = new ProgressBar(context);
 
@@ -120,6 +125,7 @@ public class AgentControllerImpl implements AgentController{
     private void displayAgent(O<UiAgent> agentOption){
         isAlive();
         if(agentOption.isSuccess()){
+            Timber.d("Display agent: %s", agentType);
 
             final UiAgent agent = agentOption.getData();
             imageLayer = new ArrayList<>(agent.getOverlayCount());
@@ -133,9 +139,11 @@ public class AgentControllerImpl implements AgentController{
             progressBar.setVisibility(View.GONE);
             imageLayer.get(0).setBackgroundDrawable(context.getResources().getDrawable(agent.getFirstImage()));
 
+            Timber.d("Initial start animation");
             startAnimation(agent);
 
         }else{
+            Timber.e("Failure during loading agent data :(");
             //TODO
             throw new RuntimeException(agentOption.getError());
         }
@@ -143,7 +151,9 @@ public class AgentControllerImpl implements AgentController{
 
     private void startAnimation(final UiAgent agent){
         isAlive();
+
         final long animationDelay = getAnimationDelay();
+        Timber.d("Start animation in %s ms", animationDelay);
 
         this.animationRunnable = new AnimationRunnable(agent);
         handler.postDelayed(this.animationRunnable, animationDelay);
@@ -151,6 +161,7 @@ public class AgentControllerImpl implements AgentController{
 
     private void startSoundHandler(final List<AnimationUtil.SoundMapping> soundMap){
         isAlive();
+        Timber.d("Start sound handler");
         for(AnimationUtil.SoundMapping soundMapping : soundMap){
             new Handler().postDelayed(new SoundRunnable(soundMapping.getSoundId()), soundMapping.getTime());
         }
@@ -170,6 +181,7 @@ public class AgentControllerImpl implements AgentController{
 
     private void isAlive(){
         if(killed){
+            Timber.e("Agent is dead, long live the agent ... but this one is really dead");
             throw new RuntimeException("FloatingView is dead x.x");
         }
     }
@@ -182,6 +194,7 @@ public class AgentControllerImpl implements AgentController{
 
         @Override
         protected void onPostExecute(O<UiAgent> uiAgentO) {
+            Timber.d("Agent data successfully loaded");
             displayAgent(uiAgentO);
         }
     };
@@ -196,6 +209,11 @@ public class AgentControllerImpl implements AgentController{
 
         @Override
         public void run() {
+            Timber.d(
+                "Execute sound runnable: Id: %s, isAnimationRunning: %s, isKilled: %s, isMute: %s",
+                sound, animationIsRunning.get(), killed, isMute.get()
+            );
+
             if(animationIsRunning.get() && !killed && !isMute.get()){
                 MediaPlayer.create(AgentControllerImpl.this.context, sound).start();
             }
@@ -213,7 +231,12 @@ public class AgentControllerImpl implements AgentController{
 
         @Override
         public void run() {
-            if(imageLayer != null && imageLayer.size() > 0 && !killed){
+            Timber.d(
+                "Execute animationRunnable: imagelayer null: %s, #imagelayer: %s, killed: %s, animationRunning: %s",
+                imageLayer == null, imageLayer.size(), killed, animationIsRunning.get()
+            );
+
+            if(imageLayer != null && imageLayer.size() > 0 && !killed && animationIsRunning.get()){
                 final UiAnimation uiAnimation = getRandomAnimation(agent);
                 final AnimationUtil.AnimationDrawableResult animationDrawable = AnimationUtil.getAnimationDrawable(AgentControllerImpl.this.context, uiAnimation, agent.getOverlayCount());
                 final List<AnimationDrawable> animationDrawables = animationDrawable.getAnimationDrawables();

@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import at.droelf.clippy.Global;
+import timber.log.Timber;
+
 public class FloatingView extends FrameLayout implements View.OnTouchListener {
 
     private final GestureDetector gestureDetector;
@@ -28,6 +31,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
 
     public FloatingView(Context context) {
         super(context);
+
         this.gestureDetector = new GestureDetector(context, new GestureListener());
         this.windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -48,6 +52,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
         this.killed = true;
         this.windowManager.removeViewImmediate(this);
         this.floatingViewCLickListener = null;
+        Timber.d("Somebody killed me");
     }
 
     @Override
@@ -56,6 +61,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
         if(v == null){
             throw new IllegalArgumentException("Provided view is null :(");
         }
+        Timber.d("Add View: %s", v);
         this.removeAllViews();
         this.childView = v;
 
@@ -100,6 +106,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
     class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
+            Timber.d("Single tap detected");
             if(FloatingView.this.floatingViewCLickListener != null){
                 new Handler().post(new Runnable() {
                     @Override
@@ -113,6 +120,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
 
         @Override
         public void onLongPress(MotionEvent e) {
+            Timber.d("Long press detected");
             if(FloatingView.this.floatingViewCLickListener != null){
                 new Handler().post(new Runnable() {
                     @Override
@@ -126,6 +134,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
+            Timber.d("Double tap detected");
             if(FloatingView.this.floatingViewCLickListener != null){
                 new Handler().post(new Runnable() {
                     @Override
@@ -140,6 +149,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
 
     private void isAlive(){
         if(killed){
+            Timber.e("View is dead, leave it alone!");
             throw new RuntimeException("FlatingView is dead x.x");
         }
     }
