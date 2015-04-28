@@ -131,7 +131,7 @@ public class AgentControllerImpl implements AgentController{
             }
 
             progressBar.setVisibility(View.GONE);
-            imageLayer.get(0).setBackground(context.getResources().getDrawable(agent.getFirstImage()));
+            imageLayer.get(0).setBackgroundDrawable(context.getResources().getDrawable(agent.getFirstImage()));
 
             startAnimation(agent);
 
@@ -159,7 +159,7 @@ public class AgentControllerImpl implements AgentController{
     private UiAnimation getRandomAnimation(UiAgent uiAgent){
         isAlive();
         final ArrayList<String> keys = new ArrayList<>(uiAgent.getAnimations().keySet());
-        int i = new Random().nextInt(keys.size() - 1) + 1;
+        final int i = new Random().nextInt(keys.size() - 1) + 1;
         return uiAgent.getAnimations().get(keys.get(i));
     }
 
@@ -170,7 +170,7 @@ public class AgentControllerImpl implements AgentController{
 
     private void isAlive(){
         if(killed){
-            throw new RuntimeException("FlatingView is dead x.x");
+            throw new RuntimeException("FloatingView is dead x.x");
         }
     }
 
@@ -219,7 +219,7 @@ public class AgentControllerImpl implements AgentController{
                 final List<AnimationDrawable> animationDrawables = animationDrawable.getAnimationDrawables();
 
                 for(ImageView imageView : imageLayer){
-                    imageView.setBackground(context.getResources().getDrawable(agentType.getAgentMapping().getEmptyFrameId()));
+                    imageView.setBackgroundDrawable(context.getResources().getDrawable(agentType.getAgentMapping().getEmptyFrameId()));
                 }
 
                 final CustomAnimationDrawableNew firstLayer = new CustomAnimationDrawableNew(animationDrawable.getAnimationDrawables().get(0)){
@@ -231,10 +231,10 @@ public class AgentControllerImpl implements AgentController{
                     }
                 };
 
-                imageLayer.get(0).setBackground(firstLayer);
+                imageLayer.get(0).setBackgroundDrawable(firstLayer);
 
                 for(int i = 1; i < animationDrawables.size(); i++){
-                    imageLayer.get(i).setBackground(animationDrawables.get(i));
+                    imageLayer.get(i).setBackgroundDrawable(animationDrawables.get(i));
                 }
 
                 for(ImageView imageView : imageLayer){

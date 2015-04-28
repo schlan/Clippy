@@ -1,8 +1,10 @@
-package at.droelf.clippy;
+package at.droelf.clippy.utils;
 
 
 import android.content.Context;
 import android.content.Intent;
+
+import at.droelf.clippy.FloatingService;
 
 public class IntentHelper {
 

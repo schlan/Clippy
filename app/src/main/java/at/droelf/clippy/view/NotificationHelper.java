@@ -8,7 +8,7 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
 import at.droelf.clippy.FloatingService;
-import at.droelf.clippy.IntentHelper;
+import at.droelf.clippy.utils.IntentHelper;
 import at.droelf.clippy.MainActivity;
 import at.droelf.clippy.model.AgentType;
 
