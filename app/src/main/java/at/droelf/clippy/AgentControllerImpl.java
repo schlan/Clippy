@@ -75,6 +75,8 @@ public class AgentControllerImpl implements AgentController{
                 ((AnimationDrawable)imageView.getBackground()).stop();
             }
         }
+        
+        resetImages();
     }
 
     @Override
@@ -151,6 +153,7 @@ public class AgentControllerImpl implements AgentController{
 
     private void startAnimation(final UiAgent agent){
         isAlive();
+        resetImages();
 
         final long animationDelay = getAnimationDelay();
         Timber.d("Start animation in %s ms", animationDelay);
@@ -171,6 +174,9 @@ public class AgentControllerImpl implements AgentController{
         isAlive();
         final ArrayList<String> keys = new ArrayList<>(uiAgent.getAnimations().keySet());
         final int i = new Random().nextInt(keys.size() - 1) + 1;
+
+        Timber.d("Random animation: %s", keys.get(i));
+
         return uiAgent.getAnimations().get(keys.get(i));
     }
 
@@ -183,6 +189,14 @@ public class AgentControllerImpl implements AgentController{
         if(killed){
             Timber.e("Agent is dead, long live the agent ... but this one is really dead");
             throw new RuntimeException("FloatingView is dead x.x");
+        }
+    }
+
+    private void resetImages(){
+        isAlive();
+        imageLayer.get(0).setBackgroundDrawable(context.getResources().getDrawable(getAgentType().getAgentMapping().getFirstFrameId()));
+        for(int i = 1; i < imageLayer.size(); i++){
+            imageLayer.get(i).setBackgroundDrawable(context.getResources().getDrawable(getAgentType().getAgentMapping().getEmptyFrameId()));
         }
     }
 
