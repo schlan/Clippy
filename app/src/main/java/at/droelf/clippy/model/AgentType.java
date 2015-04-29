@@ -10,6 +10,7 @@ public enum AgentType {
     ROCKY("agent_rocky.json", new RockyMapping(), false),
     F1("agent_f1.json", new F1Mapping(), false),
     ROVER("agent_rover.json", new RoverMapping(), false),
+    GENIE("agent_genie.json", new GenieMapping(), false),
     BONZI("agent_bonzi.json", new BonziMapping(), true)
     ;
 

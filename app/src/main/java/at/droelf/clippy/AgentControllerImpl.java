@@ -75,7 +75,7 @@ public class AgentControllerImpl implements AgentController{
                 ((AnimationDrawable)imageView.getBackground()).stop();
             }
         }
-        
+
         resetImages();
     }
 
