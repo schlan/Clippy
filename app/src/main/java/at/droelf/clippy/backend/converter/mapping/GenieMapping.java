@@ -453,7 +453,7 @@ public class GenieMapping implements AgentMapping {
     }
 
     @Override
-    public int[] getSOUND_MAPPING() {
+    public int[] getSoundMapping() {
         return SOUND_MAPPING;
     }
 
@@ -463,7 +463,7 @@ public class GenieMapping implements AgentMapping {
     }
 
     @Override
-    public int getNUMBER_COLUMNS() {
+    public int getNumberColumns() {
         return NUMBER_COLUMNS;
     }
 

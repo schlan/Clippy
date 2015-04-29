@@ -58,7 +58,7 @@ public class AgentConverterImpl implements AgentConverter {
                     convertImageListToId(frame.getImages(), agent),
                     frame.getExitBranch(),
                     convetBranchingToUiBranches(frame.getBranching()),
-                    (frame.getSound() != null ) ? agentMapping.getSOUND_MAPPING()[frame.getSound() - 1] : null
+                    (frame.getSound() != null ) ? agentMapping.getSoundMapping()[frame.getSound() - 1] : null
             );
             uiAnimationList.add(uiFrame);
         }
@@ -97,7 +97,7 @@ public class AgentConverterImpl implements AgentConverter {
                 imagePositionToId(
                     getFrameWidth(agent),
                     getFrameHeight(agent),
-                    agentMapping.getNUMBER_COLUMNS(),
+                    agentMapping.getNumberColumns(),
                     agentMapping.getNumberRows(),
                     imagePos.get(0),
                     imagePos.get(1)
