@@ -13,11 +13,17 @@ import timber.log.Timber;
 
 public class FloatingService extends Service {
 
+    private final static int NOTIFICATION_ID = 14232;
+
     private final IBinder mBinder = new LocalBinder();
     private AgentController agentController;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        if(intent == null){
+            return START_STICKY;
+        }
 
         if(intent.hasExtra(Command.KEY)){
 
@@ -27,16 +33,10 @@ public class FloatingService extends Service {
             switch (command){
                 case Show:
                     if(agentController == null){
-
                         final AgentType agentType = (AgentType) intent.getSerializableExtra(AgentType.KEY);
                         this.agentController = new AgentControllerImpl(agentType, getApplicationContext(), Global.INSTANCE.getAgentService());
-
-//                        //TODO mute stuff
-//                        startForeground(1, NotificationHelper.getNotification(this, agentType, true, false));
-                        startForeground(123, NotificationHelper.getNotification(this, agentController.getAgentType(), agentController.isRunning(), agentController.isMute()));
-
+                        startForeground(NOTIFICATION_ID, NotificationHelper.getNotification(this, agentController.getAgentType(), agentController.isRunning(), agentController.isMute()));
                     }
-
                     break;
 
                 case Start:
@@ -72,11 +72,10 @@ public class FloatingService extends Service {
                     break;
             }
 
-            //Start Foregroundservice + Notification
             if(agentController != null){
                 final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 //mNotificationManager.cancel(123);
-                mNotificationManager.notify(123, NotificationHelper.getNotification(this, agentController.getAgentType(), agentController.isRunning(), agentController.isMute()));
+                mNotificationManager.notify(NOTIFICATION_ID, NotificationHelper.getNotification(this, agentController.getAgentType(), agentController.isRunning(), agentController.isMute()));
             }
         }
 
