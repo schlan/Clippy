@@ -83,6 +83,10 @@ public class FloatingService extends Service {
         return START_NOT_STICKY;
     }
 
+    public AgentController getAgentController(){
+        return agentController;
+    }
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -91,7 +95,7 @@ public class FloatingService extends Service {
 
 
     public class LocalBinder extends Binder {
-        FloatingService getService() {
+        public FloatingService getService() {
             return FloatingService.this;
         }
     }
