@@ -2,44 +2,30 @@ package at.droelf.clippy;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.ColorStateList;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import at.droelf.clippy.broadcastreceiver.DeviceUnlock;
-import at.droelf.clippy.fragments.AgentPresentationFragment;
 import at.droelf.clippy.model.AgentType;
-import at.droelf.clippy.model.raw.Agent;
 import at.droelf.clippy.utils.IntentHelper;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -47,43 +33,51 @@ import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private BroadcastReceiver mReceiver;
+
     @InjectView(R.id.agent_list)
-    RecyclerView viewPager;
+    RecyclerView recyclerView;
+
+    @InjectView(R.id.agent_list_toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        setSupportActionBar(toolbar);
+
         registerBroadcastListener();
-        viewPager.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        viewPager.setAdapter(new AgentAdapter(getApplicationContext()));
+
+        final int agentListOrientation = getResources().getInteger(R.integer.agent_list_orientation);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.agent_list_span), agentListOrientation));
+        recyclerView.setAdapter(new AgentAdapter(getApplicationContext()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        registerBroadcastListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        unregisterBroadcastListener();
     }
 
     private void registerBroadcastListener(){
         final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
-        final BroadcastReceiver mReceiver = new DeviceUnlock();
+        this.mReceiver = new DeviceUnlock();
         registerReceiver(mReceiver, filter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter{
-
-        private final List<AgentType> agentTypes;
-
-        public ViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-            this.agentTypes = Arrays.asList(AgentType.values());
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return AgentPresentationFragment.newInstance(agentTypes.get(position));
-        }
-
-        @Override
-        public int getCount() {
-            return agentTypes.size();
+    private void unregisterBroadcastListener(){
+        if(mReceiver != null){
+            unregisterReceiver(mReceiver);
         }
     }
 
@@ -131,12 +125,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
             final AgentAdapterViewHolder viewHolder1 = (AgentAdapterViewHolder) viewHolder;
             final AgentType agentType = agents.get(i);
+            final Drawable drawable = context.getResources().getDrawable(agentType.getAgentMapping().getFirstFrameId());
+
             viewHolder1.itemView.setOnClickListener(new AgentClickListener(context, agentType));
-            viewHolder1.getImageView().setImageDrawable(context.getResources().getDrawable(agentType.getAgentMapping().getFirstFrameId()));
-            viewHolder1.getTextView().setText(agentType.name());
+            viewHolder1.getImageView().setBackgroundDrawable(drawable);
         }
 
         @Override
@@ -147,23 +142,24 @@ public class MainActivity extends AppCompatActivity {
 
     class AgentAdapterViewHolder extends RecyclerView.ViewHolder{
 
-        private final ImageView imageView;
-        private final TextView textView;
+        @InjectView(R.id.agent_image)
+        ImageView imageView;
+
+        @InjectView(R.id.card_view)
+        CardView cardView;
 
         public AgentAdapterViewHolder(View v) {
             super(v);
-            textView = (TextView) v.findViewById(R.id.agent_title);
-            imageView = (ImageView) v.findViewById(R.id.agent_image);
+            ButterKnife.inject(this, v);
         }
 
         public ImageView getImageView(){
             return imageView;
         }
 
-        public TextView getTextView(){
-            return textView;
+        public CardView getCardView() {
+            return cardView;
         }
-
     }
 
 
