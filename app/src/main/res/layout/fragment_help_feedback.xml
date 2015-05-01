@@ -18,7 +18,6 @@
         android:layout_above="@+id/help_user_feedback_fab"
         >
 
-
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/help_user_feedback"
             android:layout_width="match_parent"
@@ -40,20 +39,20 @@
 
 
     </android.support.v7.widget.CardView>
+    
 
-
-    <com.melnykov.fab.FloatingActionButton
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@id/help_user_feedback_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_action_accept"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        fab:fab_icon="@drawable/ic_action_accept"
         fab:fab_colorNormal="@color/orange_400"
         fab:fab_colorPressed="@color/orange_900"
-        fab:fab_colorRipple="@color/orange_100" />
-
+        android:layout_marginBottom="16dp"
+        />
 
 
 </RelativeLayout>

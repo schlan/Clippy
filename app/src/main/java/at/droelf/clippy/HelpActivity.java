@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.melnykov.fab.FloatingActionButton;
 import com.zendesk.sdk.feedback.ZendeskFeedbackConfiguration;
 import com.zendesk.sdk.model.CustomField;
 import com.zendesk.sdk.model.DeviceInfo;
