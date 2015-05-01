@@ -79,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.agent_list_span), agentListOrientation));
         recyclerView.setAdapter(new AgentAdapter(getApplicationContext()));
 
-        initFabs();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         registerReceiver(agentBroadcastReceiver, new IntentFilter(FloatingService.AGENT_STATE_ACTION));
+        initFabs();
     }
 
     @Override
