@@ -16,10 +16,8 @@ import com.rengwuxian.materialedittext.validation.METValidator;
 import com.zendesk.sdk.feedback.impl.ZendeskFeedbackConnector;
 import com.zendesk.sdk.model.CreateRequest;
 import com.zendesk.sdk.model.network.ErrorResponse;
-import com.zendesk.sdk.network.RequestProvider;
 import com.zendesk.sdk.network.impl.ZendeskCallback;
 import com.zendesk.sdk.network.impl.ZendeskConfig;
-import com.zendesk.sdk.network.impl.ZendeskRequestProvider;
 
 import at.droelf.clippy.HelpActivity;
 import at.droelf.clippy.R;
@@ -29,8 +27,13 @@ import butterknife.InjectView;
 public class FeedBackHelpFragment extends Fragment {
 
     public static FeedBackHelpFragment newInstance(){
-        return new FeedBackHelpFragment();
+        final FeedBackHelpFragment feedBackHelpFragment = new FeedBackHelpFragment();
+        feedBackHelpFragment.setRetainInstance(true);
+        return feedBackHelpFragment;
     }
+
+    @InjectView(R.id.help_user_feedback_fab)
+    FloatingActionButton fab;
 
     @InjectView(R.id.help_user_feedback)
     MaterialEditText userFeedBackEditText;
@@ -43,54 +46,41 @@ public class FeedBackHelpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View inflate = inflater.inflate(R.layout.fragment_help_feedback, container, false);
         ButterKnife.inject(this, inflate);
-        return inflate;
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-
-        final HelpActivity helpActivity = (HelpActivity) activity;
-        final FloatingActionButton fab = helpActivity.getFab();
-        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_accept));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 boolean validName = userFeedBackEditText.validateWith(new METValidator("Feedback too short") {
                     @Override
                     public boolean isValid(CharSequence charSequence, boolean b) {
-                        return charSequence != null && charSequence.length() > 5;
+                        return charSequence != null && charSequence.length() > 1;
                     }
                 });
 
                 if (validName) {
                     sendComment(userFeedBackEditText.getText().toString());
-                    Toast.makeText(getActivity(), "Valid -> next", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
+        return inflate;
     }
 
     private void setLoading(boolean loading){
         if(loading){
             userFeedBackEditText.setEnabled(false);
             progressBar.setVisibility(View.VISIBLE);
+            fab.setEnabled(false);
         } else {
             userFeedBackEditText.setEnabled(true);
             progressBar.setVisibility(View.GONE);
+            fab.setEnabled(true);
         }
     }
 
     private void sendComment(String feedback){
         setLoading(true);
 
-        final RequestProvider requestProvider = new ZendeskRequestProvider();
         final ZendeskFeedbackConnector zendeskFeedbackConnector = new ZendeskFeedbackConnector(getActivity(), ZendeskConfig.INSTANCE.getContactConfiguration());
 
         if(zendeskFeedbackConnector.isValid()){

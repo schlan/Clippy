@@ -1,6 +1,5 @@
 package at.droelf.clippy.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,9 +30,13 @@ public class UserHelpFragment extends Fragment{
     @InjectView(R.id.help_user_email)
     MaterialEditText emailEditText;
 
+    @InjectView(R.id.help_user_reg_fab)
+    FloatingActionButton fab;
 
     public static UserHelpFragment newInstance(){
-        return new UserHelpFragment();
+        final UserHelpFragment userHelpFragment = new UserHelpFragment();
+        userHelpFragment.setRetainInstance(true);
+        return userHelpFragment;
     }
 
     @Nullable
@@ -41,17 +44,6 @@ public class UserHelpFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_help_user_registration, container, false);
         ButterKnife.inject(this, v);
-        return v;
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        final HelpActivity helpActivity = (HelpActivity) activity;
-        final FloatingActionButton fab = helpActivity.getFab();
-        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_forward));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,19 +53,21 @@ public class UserHelpFragment extends Fragment{
                 boolean validName = userNameEditText.validateWith(new METValidator("Name too short") {
                     @Override
                     public boolean isValid(CharSequence charSequence, boolean b) {
-                        return charSequence != null && charSequence.length() > 3;
+                        return charSequence != null && charSequence.length() > 2;
                     }
                 });
 
-                if(validEmail && validName){
+                if (validEmail && validName) {
                     Toast.makeText(getActivity(), "Valid -> next", Toast.LENGTH_LONG).show();
-                    Identity build = new AnonymousIdentity.Builder().withNameIdentifier(userNameEditText.getText().toString()).withEmailIdentifier(emailEditText.getText().toString()).build();
+                    final Identity build = new AnonymousIdentity.Builder().withNameIdentifier(userNameEditText.getText().toString()).withEmailIdentifier(emailEditText.getText().toString()).build();
                     ZendeskConfig.INSTANCE.setIdentity(build);
-                    helpActivity.next();
+                    if (getActivity() != null) {
+                        ((HelpActivity) getActivity()).next();
+                    }
                 }
-
             }
         });
 
+        return v;
     }
 }

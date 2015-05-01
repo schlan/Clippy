@@ -1,6 +1,9 @@
 package at.droelf.clippy;
 
 
+
+import com.zendesk.sdk.logger.Logger;
+
 import at.droelf.clippy.backend.AgentService;
 import at.droelf.clippy.backend.AgentServiceImpl;
 import at.droelf.clippy.backend.source.AgentSource;
@@ -15,10 +18,12 @@ public enum Global {
     private final AgentService agentService;
     private final Timber.Tree logTree;
 
-    private Global(){
+    Global(){
         this.agentSource = new AgentSourceImpl();
         this.agentService = new AgentServiceImpl(agentSource);
+
         this.logTree = new Timber.DebugTree();
+        Logger.setLoggable(true);
     }
 
     public AgentService getAgentService() {
@@ -29,13 +34,5 @@ public enum Global {
         return logTree;
     }
 
-    //    private class DebugTree extends Timber.Tree{
-//
-//        @Override
-//        protected void log(int priority, String tag, String message, Throwable t) {
-//            //Log.println(priority, tag, message);
-//        }
-//
-//    }o
 
 }

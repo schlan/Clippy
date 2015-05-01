@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        registerBroadcastListener();
-
         final int agentListOrientation = getResources().getInteger(R.integer.agent_list_orientation);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.agent_list_span), agentListOrientation));
         recyclerView.setAdapter(new AgentAdapter(getApplicationContext()));
@@ -66,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        registerBroadcastListener();
+        unregisterBroadcastListener();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        unregisterBroadcastListener();
+        registerBroadcastListener();
     }
 
     @Override
