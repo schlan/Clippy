@@ -16,10 +16,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+
+import com.zendesk.sdk.model.network.AnonymousIdentity;
+import com.zendesk.sdk.network.impl.ZendeskConfig;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         final int agentListOrientation = getResources().getInteger(R.integer.agent_list_orientation);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.agent_list_span), agentListOrientation));
         recyclerView.setAdapter(new AgentAdapter(getApplicationContext()));
+
     }
 
     @Override
@@ -68,6 +75,25 @@ public class MainActivity extends AppCompatActivity {
         unregisterBroadcastListener();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menu_support:
+                startActivity(new Intent(MainActivity.this, HelpActivity.class));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void registerBroadcastListener(){
         final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -80,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
             unregisterReceiver(mReceiver);
         }
     }
+
+
 
     class AgentClickListener implements View.OnClickListener{
 

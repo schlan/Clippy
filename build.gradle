@@ -12,5 +12,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://zendesk.artifactoryonline.com/zendesk/repo' }
     }
 }

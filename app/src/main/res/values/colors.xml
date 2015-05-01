@@ -6,6 +6,8 @@
     <color name="indigo_500">#3F51B5</color>
     <color name="indigo_700">#303F9F</color>
 
+    <color name="orange_100">#FFE0B2</color>
     <color name="orange_400">#FFA726</color>
+    <color name="orange_900">#E65100</color>
 
 </resources>

@@ -30,6 +30,9 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".HelpActivity" android:label="Support"
+            android:configChanges="orientation|keyboardHidden"/>
+
     </application>
 
 </manifest>
