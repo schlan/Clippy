@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBoxPreference
+        android:title="Autostart"
+        android:defaultValue="true"
+        android:summary="Launch your last used agent after boot."
+        android:key="settings_start_boot" />
+
+</PreferenceScreen>

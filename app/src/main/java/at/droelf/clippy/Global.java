@@ -11,6 +11,7 @@ import at.droelf.clippy.backend.AgentServiceImpl;
 import at.droelf.clippy.backend.source.AgentSource;
 import at.droelf.clippy.backend.source.AgentSourceImpl;
 import at.droelf.clippy.storage.ClippyStorage;
+import at.droelf.clippy.storage.SettingsStorage;
 import timber.log.Timber;
 
 
@@ -20,6 +21,7 @@ public enum Global {
     private AgentSource agentSource;
     private AgentService agentService;
     private ClippyStorage clippyStorage;
+    private SettingsStorage settingsStorage;
     private Timber.Tree logTree;
     private Context context;
     private boolean init = false;
@@ -31,6 +33,7 @@ public enum Global {
         this.agentSource = new AgentSourceImpl();
         this.agentService = new AgentServiceImpl(agentSource);
         this.clippyStorage = new ClippyStorage(context);
+        this.settingsStorage = new SettingsStorage(context);
 
         this.logTree = new Timber.DebugTree();
         Logger.setLoggable(true);
@@ -51,6 +54,11 @@ public enum Global {
     public ClippyStorage getClippyStorage(){
         checkInit();
         return clippyStorage;
+    }
+
+    public SettingsStorage getSettingsStorage(){
+        checkInit();
+        return settingsStorage;
     }
 
     private void checkInit(){

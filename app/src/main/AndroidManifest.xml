@@ -42,6 +42,10 @@
             android:label="Support"
             android:windowSoftInputMode="adjustResize"/>
 
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Settings" />
+
     </application>
 
 </manifest>

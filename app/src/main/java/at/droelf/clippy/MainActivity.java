@@ -2,16 +2,13 @@ package at.droelf.clippy;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -100,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_support:
                 startActivity(new Intent(MainActivity.this, HelpActivity.class));
+                return true;
+            case R.id.menu_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

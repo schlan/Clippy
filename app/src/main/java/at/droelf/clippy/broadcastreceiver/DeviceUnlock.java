@@ -14,6 +14,7 @@ import timber.log.Timber;
 public class DeviceUnlock extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+
         if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
             Timber.d("Device unlocked - Start");
             context.startService(IntentHelper.getCommandIntent(context, FloatingService.Command.Start));
@@ -23,9 +24,13 @@ public class DeviceUnlock extends BroadcastReceiver {
             context.startService(IntentHelper.getCommandIntent(context, FloatingService.Command.Stop));
 
         } else if(Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())){
-            Timber.d("Device boot completed - Starting Clippy");
             final AgentType lastUsedAgent = Global.INSTANCE.getClippyStorage().getLastUsedAgent();
-            context.startService(IntentHelper.getShowIntent(context, lastUsedAgent));
+            final boolean startOnBoot = Global.INSTANCE.getSettingsStorage().isSettingsStartOnBoot();
+            Timber.d("Device boot completed - Starting Clippy - Agent: %s, startOnBoot: %s", lastUsedAgent, startOnBoot);
+
+            if(startOnBoot){
+                context.startService(IntentHelper.getShowIntent(context, lastUsedAgent));
+            }
         }
 
     }
