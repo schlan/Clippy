@@ -11,4 +11,5 @@ public interface AgentController {
     public void unMute();
     public boolean isMute();
     public AgentType getAgentType();
+    void setAgentControllerListener(AgentControllerListener agentControllerListener);
 }

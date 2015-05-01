@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
 import at.droelf.clippy.FloatingService;
+import at.droelf.clippy.R;
 import at.droelf.clippy.utils.IntentHelper;
 import at.droelf.clippy.MainActivity;
 import at.droelf.clippy.model.AgentType;
@@ -20,12 +21,12 @@ public class NotificationHelper {
         final PendingIntent startMainActivity = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT);
 
         final FloatingService.Command startStopCommand = (isRunning) ? FloatingService.Command.Stop : FloatingService.Command.Start;
-        final int startStopDrawable = (isRunning) ? android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play;
+        final int startStopDrawable = (isRunning) ? R.drawable.ic_action_stop  : R.drawable.ic_action_play;
         final String startStopString = (isRunning) ? "Stop" : "Start";
         final PendingIntent startStopPending = PendingIntent.getService(context, 110, IntentHelper.getCommandIntent(context, startStopCommand), PendingIntent.FLAG_CANCEL_CURRENT);
 
         final FloatingService.Command muteUnmuteCommand = (isMute) ? FloatingService.Command.UnMute : FloatingService.Command.Mute;
-        final int muteUnmuteDrawable = (isMute) ? android.R.drawable.ic_lock_silent_mode_off : android.R.drawable.ic_lock_silent_mode;
+        final int muteUnmuteDrawable = (isMute) ? R.drawable.ic_action_volume_on : R.drawable.ic_action_volume_muted;
         final String muteUnmuteString = (isMute) ? "Unmute" : "Mute";
         final PendingIntent muteUnmutePending = PendingIntent.getService(context, 120, IntentHelper.getCommandIntent(context, muteUnmuteCommand), PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -42,7 +43,7 @@ public class NotificationHelper {
 
                 .addAction(startStopDrawable, startStopString, startStopPending)
                 .addAction(muteUnmuteDrawable, muteUnmuteString, muteUnmutePending)
-                .addAction(android.R.drawable.ic_delete, "Kill", killPending)
+                .addAction(R.drawable.ic_action_cancel, "Kill", killPending)
 
                 .build();
     }

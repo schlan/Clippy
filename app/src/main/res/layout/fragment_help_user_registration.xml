@@ -65,7 +65,7 @@
         android:layout_alignParentRight="true"
         fab:fab_colorNormal="@color/orange_400"
         fab:fab_colorPressed="@color/orange_900"
-        android:elevation="8dpa"
+        android:elevation="8dp"
         android:layout_marginBottom="16dp"
         />
 

@@ -39,7 +39,7 @@
 
 
     </android.support.v7.widget.CardView>
-    
+
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@id/help_user_feedback_fab"

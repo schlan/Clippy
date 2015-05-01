@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -44,6 +45,8 @@ public class AgentControllerImpl implements AgentController{
     private AtomicBoolean isMute = new AtomicBoolean(false);
     private boolean killed = false;
 
+    private WeakReference<AgentControllerListener> agentControllerListener;
+
 
     public AgentControllerImpl(AgentType agentType, Context context, AgentService agentService){
         this.agentType = agentType;
@@ -77,6 +80,10 @@ public class AgentControllerImpl implements AgentController{
         }
 
         resetImages();
+
+        if(agentControllerListener != null && agentControllerListener.get() != null){
+            agentControllerListener.get().stateChanged(false);
+        }
     }
 
     @Override
@@ -84,6 +91,11 @@ public class AgentControllerImpl implements AgentController{
         isAlive();
         if(animationIsRunning.compareAndSet(false, true)){
             handler.post(animationRunnable);
+
+            if(agentControllerListener != null && agentControllerListener.get() != null){
+                agentControllerListener.get().stateChanged(true);
+            }
+
         }
     }
 
@@ -96,11 +108,17 @@ public class AgentControllerImpl implements AgentController{
     @Override
     public void mute() {
         isMute.set(true);
+        if(agentControllerListener != null && agentControllerListener.get() != null){
+            agentControllerListener.get().volumeChanged(true);
+        }
     }
 
     @Override
     public void unMute() {
         isMute.set(false);
+        if(agentControllerListener != null && agentControllerListener.get() != null){
+            agentControllerListener.get().volumeChanged(false);
+        }
     }
 
     @Override
@@ -112,6 +130,12 @@ public class AgentControllerImpl implements AgentController{
     public AgentType getAgentType() {
         return agentType;
     }
+
+    @Override
+    public void setAgentControllerListener(AgentControllerListener agentControllerListener) {
+        this.agentControllerListener = new WeakReference<AgentControllerListener>(agentControllerListener);
+    }
+
 
     private void initView(){
         isAlive();
@@ -143,6 +167,10 @@ public class AgentControllerImpl implements AgentController{
 
             Timber.d("Initial start animation");
             startAnimation(agent);
+
+            if(agentControllerListener != null && agentControllerListener.get() != null){
+                agentControllerListener.get().stateChanged(true);
+            }
 
         }else{
             Timber.e("Failure during loading agent data :(");

@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.zendesk.sdk.model.network.AnonymousIdentity;
 import com.zendesk.sdk.network.impl.ZendeskConfig;
 
@@ -35,17 +36,26 @@ import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.utils.IntentHelper;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import timber.log.Timber;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private BroadcastReceiver mReceiver;
 
     @InjectView(R.id.agent_list)
     RecyclerView recyclerView;
 
     @InjectView(R.id.agent_list_toolbar)
     Toolbar toolbar;
+
+    @InjectView(R.id.main_fab_kill)
+    FloatingActionButton fabKill;
+
+    @InjectView(R.id.main_fab_start)
+    FloatingActionButton fabStart;
+
+    @InjectView(R.id.main_fab_mute)
+    FloatingActionButton fabMute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +69,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.agent_list_span), agentListOrientation));
         recyclerView.setAdapter(new AgentAdapter(getApplicationContext()));
 
+        initFabs();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterBroadcastListener();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerBroadcastListener();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,17 +92,25 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void registerBroadcastListener(){
-        final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
-        this.mReceiver = new DeviceUnlock();
-        registerReceiver(mReceiver, filter);
-    }
-
-    private void unregisterBroadcastListener(){
-        if(mReceiver != null){
-            unregisterReceiver(mReceiver);
-        }
+    private void initFabs(){
+        fabKill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(IntentHelper.getCommandIntent(MainActivity.this, FloatingService.Command.Kill));
+            }
+        });
+        fabMute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(IntentHelper.getCommandIntent(MainActivity.this, FloatingService.Command.Mute));
+            }
+        });
+        fabStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(IntentHelper.getCommandIntent(MainActivity.this, FloatingService.Command.Stop));
+            }
+        });
     }
 
 
