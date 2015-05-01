@@ -46,6 +46,8 @@ public class FloatingService extends Service {
                 case Show:
                     if(agentController == null){
                         final AgentType agentType = (AgentType) intent.getSerializableExtra(AgentType.KEY);
+                        Global.INSTANCE.getClippyStorage().setAgentLastUsed(agentType);
+
                         this.agentController = new AgentControllerImpl(agentType, getApplicationContext(), Global.INSTANCE.getAgentService());
                         if(Global.INSTANCE.getClippyStorage().isMute()){
                             agentController.mute();

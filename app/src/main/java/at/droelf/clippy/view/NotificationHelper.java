@@ -12,6 +12,7 @@ import at.droelf.clippy.R;
 import at.droelf.clippy.utils.IntentHelper;
 import at.droelf.clippy.MainActivity;
 import at.droelf.clippy.model.AgentType;
+import at.droelf.clippy.utils.StringUtils;
 
 public class NotificationHelper {
 
@@ -32,14 +33,17 @@ public class NotificationHelper {
 
         final PendingIntent killPending = PendingIntent.getService(context, 130, IntentHelper.getCommandIntent(context, FloatingService.Command.Kill), PendingIntent.FLAG_CANCEL_CURRENT);
 
+        final String content = "The revenge of Clippy";
+        final String title = StringUtils.capitalize(agentType.name());
+
         return new NotificationCompat.Builder(context)
                 .setSmallIcon(agentType.getAgentMapping().getFirstFrameId())
-                .setContentTitle(agentType.name())
-                .setContentText(agentType.toString())
+                .setContentTitle(title)
+                .setContentText(content)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), agentType.getAgentMapping().getFirstFrameId()))
                 .setContentIntent(startMainActivity)
 
-                .setStyle(new NotificationCompat.BigTextStyle())
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
 
                 .addAction(startStopDrawable, startStopString, startStopPending)
                 .addAction(muteUnmuteDrawable, muteUnmuteString, muteUnmutePending)

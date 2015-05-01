@@ -25,16 +25,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
-import com.balysv.materialripple.MaterialRippleLayout;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.zendesk.sdk.model.network.AnonymousIdentity;
-import com.zendesk.sdk.network.impl.ZendeskConfig;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import at.droelf.clippy.broadcastreceiver.DeviceUnlock;
 import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.utils.IntentHelper;
 import butterknife.ButterKnife;
@@ -155,9 +149,7 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent commandIntent = IntentHelper.getCommandIntent(context, FloatingService.Command.Show);
-                    commandIntent.putExtra(AgentType.KEY, agentType);
-                    context.startService(commandIntent);
+                    context.startService(IntentHelper.getShowIntent(context, agentType));
                 }
             }, 500);
         }

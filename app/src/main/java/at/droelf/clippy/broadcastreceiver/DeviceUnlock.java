@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import at.droelf.clippy.FloatingService;
+import at.droelf.clippy.Global;
+import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.utils.IntentHelper;
 import timber.log.Timber;
 
@@ -20,6 +22,11 @@ public class DeviceUnlock extends BroadcastReceiver {
             Timber.d("Device locked - Stop");
             context.startService(IntentHelper.getCommandIntent(context, FloatingService.Command.Stop));
 
+        } else if(Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())){
+            Timber.d("Device boot completed - Starting Clippy");
+            final AgentType lastUsedAgent = Global.INSTANCE.getClippyStorage().getLastUsedAgent();
+            context.startService(IntentHelper.getShowIntent(context, lastUsedAgent));
         }
+
     }
 }
