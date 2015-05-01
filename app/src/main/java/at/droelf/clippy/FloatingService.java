@@ -16,6 +16,11 @@ import timber.log.Timber;
 
 public class FloatingService extends Service {
 
+    public final static String AGENT_STATE_ACTION = "at.droelf.clippy.AGENT_STATE";
+    public final static String AGENT_STATE_MUTE = "agent_state_mute";
+    public final static String AGENT_STATE_STARTED = "agent_state_started";
+    public final static String AGENT_STATE_RUNNING = "agent_state_running";
+
     private final static int NOTIFICATION_ID = 14232;
 
     private final IBinder mBinder = new LocalBinder();
@@ -50,6 +55,7 @@ public class FloatingService extends Service {
 
                         startForeground(NOTIFICATION_ID, NotificationHelper.getNotification(this, agentController.getAgentType(), agentController.isRunning(), agentController.isMute()));
                         registerBroadcastListener();
+                        sendAgentState();
                     }
                     break;
 
@@ -71,6 +77,7 @@ public class FloatingService extends Service {
                         unregisterBroadcastListener();
                         this.agentController = null;
                     }
+                    sendAgentState();
                     stopSelf();
                     break;
 
@@ -85,11 +92,14 @@ public class FloatingService extends Service {
                         agentController.unMute();
                     }
                     break;
+
+                case State:
+                    sendAgentState();
+                    break;
             }
 
             if(agentController != null){
                 final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                //mNotificationManager.cancel(123);
                 mNotificationManager.notify(NOTIFICATION_ID, NotificationHelper.getNotification(this, agentController.getAgentType(), agentController.isRunning(), agentController.isMute()));
             }
         }
@@ -100,15 +110,29 @@ public class FloatingService extends Service {
     private AgentControllerListener agentControllerListener = new AgentControllerListener() {
         @Override
         public void volumeChanged(boolean mute) {
-            Global.INSTANCE.getClippyStorage().setMute(mute);
             Timber.d("AgentControllerListener mute: %s", mute);
+            Global.INSTANCE.getClippyStorage().setMute(mute);
+            sendAgentState();
         }
 
         @Override
         public void stateChanged(boolean started) {
             Timber.d("AgentControllerListener started: %s", started);
+            sendAgentState();
         }
     };
+
+    private void sendAgentState(){
+        final Intent intent = new Intent(AGENT_STATE_ACTION);
+        if(agentController != null){
+            intent.putExtra(AGENT_STATE_MUTE, agentController.isMute());
+            intent.putExtra(AGENT_STATE_RUNNING, !agentController.isKilled());
+            intent.putExtra(AGENT_STATE_STARTED, agentController.isRunning());
+        }else{
+            intent.putExtra(AGENT_STATE_RUNNING, false);
+        }
+        sendBroadcast(intent);
+    }
 
     private void registerBroadcastListener(){
         Timber.d("Register BroadcastListener - DeviceUnlock");
@@ -130,7 +154,6 @@ public class FloatingService extends Service {
         return mBinder;
     }
 
-
     public class LocalBinder extends Binder {
         FloatingService getService() {
             return FloatingService.this;
@@ -138,7 +161,7 @@ public class FloatingService extends Service {
     }
 
     public enum Command{
-        Show, Start, Stop, Kill, Mute, UnMute;
+        Show, Start, Stop, Kill, Mute, UnMute, State;
 
         public static String KEY = "COMMAND";
     }

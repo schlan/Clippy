@@ -6,6 +6,7 @@ public interface AgentController {
     public void start();
     public void stop();
     public void kill();
+    public boolean isKilled();
     public boolean isRunning();
     public void mute();
     public void unMute();

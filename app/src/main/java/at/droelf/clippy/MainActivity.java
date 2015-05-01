@@ -2,6 +2,7 @@ package at.droelf.clippy;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
@@ -30,6 +31,7 @@ import com.zendesk.sdk.network.impl.ZendeskConfig;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import at.droelf.clippy.broadcastreceiver.DeviceUnlock;
 import at.droelf.clippy.model.AgentType;
@@ -72,6 +74,17 @@ public class MainActivity extends AppCompatActivity {
         initFabs();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(agentBroadcastReceiver, new IntentFilter(FloatingService.AGENT_STATE_ACTION));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(agentBroadcastReceiver);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,38 +95,38 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.menu_support:
                 startActivity(new Intent(MainActivity.this, HelpActivity.class));
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     private void initFabs(){
-        fabKill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startService(IntentHelper.getCommandIntent(MainActivity.this, FloatingService.Command.Kill));
-            }
-        });
-        fabMute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startService(IntentHelper.getCommandIntent(MainActivity.this, FloatingService.Command.Mute));
-            }
-        });
-        fabStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startService(IntentHelper.getCommandIntent(MainActivity.this, FloatingService.Command.Stop));
-            }
-        });
+        setFabVisible(false, fabKill, fabMute, fabStart);
+        startService(IntentHelper.getCommandIntent(this, FloatingService.Command.State));
+        Timber.d("Init FABS");
     }
 
+    private void initFab(FloatingActionButton fab, int iconId, View.OnClickListener onClickListener){
+        fab.setIcon(iconId);
+//        fab.setVisibility(View.VISIBLE);
+        fab.setEnabled(true);
+        fab.setOnClickListener(onClickListener);
+    }
 
+    private void setFabVisible(boolean visible, FloatingActionButton... floatingActionButtons){
+        for(FloatingActionButton fab : floatingActionButtons){
+            if(visible){
+                fab.setEnabled(true);
+//                fab.setVisibility(View.VISIBLE);
+            } else{
+                fab.setEnabled(false);
+//                fab.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
 
     class AgentClickListener implements View.OnClickListener{
 
@@ -124,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
             this.agentType = agentType;
             this.context = context;
         }
-
 
         @Override
         public void onClick(View v) {
@@ -138,6 +150,58 @@ public class MainActivity extends AppCompatActivity {
                     context.startService(commandIntent);
                 }
             }, 500);
+        }
+    }
+
+    private BroadcastReceiver agentBroadcastReceiver = new BroadcastReceiver(){
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(FloatingService.AGENT_STATE_ACTION)){
+
+                final boolean isRunning = intent.getBooleanExtra(FloatingService.AGENT_STATE_RUNNING, false);
+                Timber.d("AgentStateBroadcastReceiver called - isRunning: %s", isRunning);
+
+                if(isRunning){
+                    initFab(fabKill, R.drawable.ic_action_cancel, new CommandClickListener(FloatingService.Command.Kill, context));
+
+                    final boolean mute = intent.getBooleanExtra(FloatingService.AGENT_STATE_MUTE, false);
+                    final int muteIcon = mute ? R.drawable.ic_action_volume_on : R.drawable.ic_action_volume_muted;
+                    final FloatingService.Command muteCommand = mute ? FloatingService.Command.UnMute : FloatingService.Command.Mute;
+                    initFab(fabMute, muteIcon, new CommandClickListener(muteCommand, context));
+
+                    final boolean started = intent.getBooleanExtra(FloatingService.AGENT_STATE_STARTED, false);
+                    final int startedIcon = started ? R.drawable.ic_action_stop : R.drawable.ic_action_play;
+                    final FloatingService.Command startedCommand = started ? FloatingService.Command.Stop : FloatingService.Command.Start;
+                    initFab(fabStart, startedIcon, new CommandClickListener(startedCommand, context));
+
+                    Timber.d("AgentStateBroadcastReceiver called - mute: %s, started: %s", mute, started);
+
+                }else{
+                    setFabVisible(false, fabStart, fabKill, fabMute);
+
+                }
+
+
+            }
+        }
+
+    };
+
+
+    class CommandClickListener implements View.OnClickListener{
+
+        private final FloatingService.Command command;
+        private final Context context;
+
+        public CommandClickListener(FloatingService.Command command, Context context){
+            this.command = command;
+            this.context = context;
+        }
+
+        @Override
+        public void onClick(View v) {
+            context.startService(IntentHelper.getCommandIntent(context, command));
         }
     }
 

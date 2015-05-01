@@ -44,7 +44,6 @@ public class AgentControllerImpl implements AgentController{
     private AtomicBoolean animationIsRunning = new AtomicBoolean(true);
     private AtomicBoolean isMute = new AtomicBoolean(false);
     private boolean killed = false;
-
     private WeakReference<AgentControllerListener> agentControllerListener;
 
 
@@ -65,6 +64,11 @@ public class AgentControllerImpl implements AgentController{
         stop();
         this.killed = true;
         this.floatingView.kill();
+    }
+
+    @Override
+    public boolean isKilled() {
+        return killed;
     }
 
     @Override
