@@ -10,7 +10,7 @@ public class ClippyStorage {
     private final static String NAME = "agent_storage";
 
     private final static String AGENT_MUTE = "agent_mute";
-    private final static boolean AGENT_MUTE_DEFAULT = true;
+    private final static boolean AGENT_MUTE_DEFAULT = false;
 
     private final static String AGENT_LAST_USED = "agent_lastused";
     private final static AgentType AGENT_LAST_USED_DEFAUlT = AgentType.CLIPPY;
