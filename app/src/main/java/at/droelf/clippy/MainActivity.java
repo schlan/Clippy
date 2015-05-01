@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     class AgentClickListener implements View.OnClickListener{
 
         private final AgentType agentType;
@@ -175,12 +176,17 @@ public class MainActivity extends AppCompatActivity {
 
                     final boolean mute = intent.getBooleanExtra(FloatingService.AGENT_STATE_MUTE, false);
                     final boolean started = intent.getBooleanExtra(FloatingService.AGENT_STATE_STARTED, false);
+                    final AgentType agentType = (AgentType) intent.getSerializableExtra(FloatingService.AGENT_STATE_TYPE);
 
                     initFab(fabKill, false, new CommandClickListener(FloatingService.Command.Kill, context));
                     initFab(fabMute, mute, new CommandClickListener(FloatingService.Command.Mute, context));
                     initFab(fabUnmute, !mute, new CommandClickListener(FloatingService.Command.UnMute, context));
                     initFab(fabStart, started, new CommandClickListener(FloatingService.Command.Start, context));
                     initFab(fabStop, !started, new CommandClickListener(FloatingService.Command.Stop, context));
+
+                    if(agentType != null){
+                        ((AgentAdapter)recyclerView.getAdapter()).setSelectedAgent(agentType);
+                    }
 
                     Timber.d(
                         "AgentStateBroadcastReceiver called - mute: %s, started: %s",
@@ -190,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }else{
                     setFabVisible(false, fabStart, fabKill, fabMute, fabUnmute, fabStop);
+                    ((AgentAdapter)recyclerView.getAdapter()).setSelectedAgent(null);
 
                 }
             }
@@ -217,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
     class AgentAdapter extends RecyclerView.Adapter{
 
         private final List<AgentType> agents;
+        private AgentType selected = null;
         private final Context context;
 
         public AgentAdapter(Context context){
@@ -240,11 +248,22 @@ public class MainActivity extends AppCompatActivity {
             viewHolder1.itemView.setOnClickListener(new AgentClickListener(context, agentType));
             viewHolder1.getImageView().setImageDrawable(drawable);
 
+            if(agentType == selected){
+                viewHolder1.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.orange_100));
+            }else{
+                viewHolder1.cardView.setCardBackgroundColor(Color.WHITE);
+            }
+
         }
 
         @Override
         public int getItemCount() {
             return agents.size();
+        }
+
+        public void setSelectedAgent(AgentType agentType){
+            this.selected = agentType;
+            notifyDataSetChanged();
         }
     }
 

@@ -20,6 +20,7 @@ public class FloatingService extends Service {
     public final static String AGENT_STATE_MUTE = "agent_state_mute";
     public final static String AGENT_STATE_STARTED = "agent_state_started";
     public final static String AGENT_STATE_RUNNING = "agent_state_running";
+    public final static String AGENT_STATE_TYPE = "agent_state_type";
 
     private final static int NOTIFICATION_ID = 14232;
 
@@ -128,6 +129,7 @@ public class FloatingService extends Service {
             intent.putExtra(AGENT_STATE_MUTE, agentController.isMute());
             intent.putExtra(AGENT_STATE_RUNNING, !agentController.isKilled());
             intent.putExtra(AGENT_STATE_STARTED, agentController.isRunning());
+            intent.putExtra(AGENT_STATE_TYPE, agentController.getAgentType());
         }else{
             intent.putExtra(AGENT_STATE_RUNNING, false);
         }
