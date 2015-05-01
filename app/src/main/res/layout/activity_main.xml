@@ -11,12 +11,11 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/agent_list_toolbar"
         android:scrollbars="horizontal|vertical"
-        android:layout_marginBottom="54dp"/>
+        android:layout_marginBottom="40dp"/>
 
-        <!--android:layout_above="@+id/control_bar"-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
         android:id="@+id/control_bar">
@@ -27,13 +26,14 @@
             android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true"
             android:background="@android:color/transparent"
             >
 
             <View
                 android:id="@+id/main_bottom_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="40dp"
                 android:background="@color/indigo_500"
                 android:layout_gravity="bottom"/>
 
@@ -51,6 +51,28 @@
                     fab:fab_icon="@drawable/ic_action_play"
                     fab:fab_colorNormal="@color/orange_400"
                     fab:fab_colorPressed="@color/orange_900"
+                    fab:fab_size="mini"
+                    />
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/main_fab_stop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_icon="@drawable/ic_action_stop"
+                    fab:fab_colorNormal="@color/orange_400"
+                    fab:fab_colorPressed="@color/orange_900"
+                    fab:fab_size="mini"
+                    />
+
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/main_fab_unmute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_icon="@drawable/ic_action_volume_on"
+                    fab:fab_colorNormal="@color/orange_400"
+                    fab:fab_colorPressed="@color/orange_900"
+                    fab:fab_size="mini"
                     />
 
                 <com.getbase.floatingactionbutton.FloatingActionButton
@@ -60,6 +82,7 @@
                     fab:fab_icon="@drawable/ic_action_volume_muted"
                     fab:fab_colorNormal="@color/orange_400"
                     fab:fab_colorPressed="@color/orange_900"
+                    fab:fab_size="mini"
                     />
 
                 <com.getbase.floatingactionbutton.FloatingActionButton
@@ -69,6 +92,7 @@
                     fab:fab_icon="@drawable/ic_action_cancel"
                     fab:fab_colorNormal="@color/orange_400"
                     fab:fab_colorPressed="@color/orange_900"
+                    fab:fab_size="mini"
                     />
             </LinearLayout>
 

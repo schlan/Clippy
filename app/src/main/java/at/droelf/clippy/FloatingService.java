@@ -124,7 +124,7 @@ public class FloatingService extends Service {
 
     private void sendAgentState(){
         final Intent intent = new Intent(AGENT_STATE_ACTION);
-        if(agentController != null){
+        if(agentController != null && agentController.isInitialized()){
             intent.putExtra(AGENT_STATE_MUTE, agentController.isMute());
             intent.putExtra(AGENT_STATE_RUNNING, !agentController.isKilled());
             intent.putExtra(AGENT_STATE_STARTED, agentController.isRunning());

@@ -44,6 +44,7 @@ public class AgentControllerImpl implements AgentController{
     private AtomicBoolean animationIsRunning = new AtomicBoolean(true);
     private AtomicBoolean isMute = new AtomicBoolean(false);
     private boolean killed = false;
+    private boolean initialized = false;
     private WeakReference<AgentControllerListener> agentControllerListener;
 
 
@@ -136,6 +137,11 @@ public class AgentControllerImpl implements AgentController{
     }
 
     @Override
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    @Override
     public void setAgentControllerListener(AgentControllerListener agentControllerListener) {
         this.agentControllerListener = new WeakReference<AgentControllerListener>(agentControllerListener);
     }
@@ -168,6 +174,7 @@ public class AgentControllerImpl implements AgentController{
 
             progressBar.setVisibility(View.GONE);
             imageLayer.get(0).setBackgroundDrawable(context.getResources().getDrawable(agent.getFirstImage()));
+            initialized = true;
 
             Timber.d("Initial start animation");
             startAnimation(agent);

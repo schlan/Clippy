@@ -3,14 +3,15 @@ package at.droelf.clippy;
 import at.droelf.clippy.model.AgentType;
 
 public interface AgentController {
-    public void start();
-    public void stop();
-    public void kill();
-    public boolean isKilled();
-    public boolean isRunning();
-    public void mute();
-    public void unMute();
-    public boolean isMute();
-    public AgentType getAgentType();
+    void start();
+    void stop();
+    void kill();
+    boolean isKilled();
+    boolean isRunning();
+    void mute();
+    void unMute();
+    boolean isMute();
+    AgentType getAgentType();
+    boolean isInitialized();
     void setAgentControllerListener(AgentControllerListener agentControllerListener);
 }
