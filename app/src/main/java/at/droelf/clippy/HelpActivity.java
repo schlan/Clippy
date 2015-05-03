@@ -70,24 +70,6 @@ public class HelpActivity extends AppCompatActivity {
 
     private void initSdk(){
 
-        ZendeskConfig.INSTANCE.init(this, "https://clippy.zendesk.com", "c4c73bee174db74b69c8057010b859141b6093eb439182ea", "mobile_sdk_client_0ad88c1b1ed31aadc633");
-        ZendeskConfig.INSTANCE.setContactConfiguration(new ZendeskFeedbackConfiguration() {
-            @Override
-            public List<String> getTags() {
-                return Arrays.asList("clippy", "android");
-            }
-
-            @Override
-            public String getAdditionalInfo() {
-                return "";
-            }
-
-            @Override
-            public String getRequestSubject() {
-                return "I'm your biggest fan";
-            }
-        });
-
         final DeviceInfo deviceInfo = new DeviceInfo(this);
 
         final String deviceModel = String.format(
@@ -107,6 +89,22 @@ public class HelpActivity extends AppCompatActivity {
                 "version_%s",
                 BuildConfig.VERSION_NAME
         );
+
+        ZendeskConfig.INSTANCE.init(this, "https://clippy.zendesk.com", "c4c73bee174db74b69c8057010b859141b6093eb439182ea", "mobile_sdk_client_0ad88c1b1ed31aadc633");
+        ZendeskConfig.INSTANCE.setContactConfiguration(new ZendeskFeedbackConfiguration() {
+            @Override
+            public List<String> getTags() {
+                return Arrays.asList("clippy", "android");
+            }
+
+            @Override
+            public String getAdditionalInfo() { return ""; }
+
+            @Override
+            public String getRequestSubject() {
+                return "I'm your biggest fan";
+            }
+        });
 
         final List<CustomField> customFields = Arrays.asList(
                 new CustomField(26579771l, deviceModel),
@@ -141,7 +139,7 @@ public class HelpActivity extends AppCompatActivity {
 
     enum ScreenState{
 
-        UserRegistration(UserHelpFragment.newInstance(), "fragment_userreg"),
+        UserRegistration(UserHelpFragment.newInstance(), "fragment_user_reg"),
         FeedBack(FeedBackHelpFragment.newInstance(), "fragment_feedback");
 
         private Fragment fragment;

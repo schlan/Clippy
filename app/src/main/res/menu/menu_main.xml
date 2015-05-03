@@ -5,11 +5,13 @@
     <item android:id="@+id/menu_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_settings"
+        app:showAsAction="always" />
 
     <item android:id="@+id/menu_support"
         android:title="Support"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_help"
+        app:showAsAction="always" />
 
 </menu>
