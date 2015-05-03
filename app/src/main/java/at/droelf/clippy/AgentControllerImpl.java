@@ -220,8 +220,8 @@ public class AgentControllerImpl implements AgentController{
     }
 
     private long getAnimationDelay(){
-        Random random = new Random();
-        return random.nextInt(5000) + 2000;
+        final AnimationPause animationPause = Global.INSTANCE.getSettingsStorage().getAnimationPause();
+        return animationPause.getRandomPause();
     }
 
     private void isAlive(){

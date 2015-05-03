@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="setting_animation_often">Often</string>
+    <string name="setting_animation_normal">Normal</string>
+    <string name="setting_animation_seldom">Seldom</string>
 </resources>

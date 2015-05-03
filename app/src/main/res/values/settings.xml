@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="settings_animation_gap_id">
+        <item>o</item>
+        <item>n</item>
+        <item>s</item>
+    </array>
+
+    <array name="settings_animation_gap">
+        <item>@string/setting_animation_often</item>
+        <item>@string/setting_animation_normal</item>
+        <item>@string/setting_animation_seldom</item>
+    </array>
+
+</resources>

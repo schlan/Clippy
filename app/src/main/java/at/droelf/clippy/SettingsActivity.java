@@ -1,24 +1,35 @@
 package at.droelf.clippy;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import at.droelf.clippy.fragments.SettingsFragment;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends AppCompatActivity {
 
+    @InjectView(R.id.settings_toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        ButterKnife.inject(this);
 
-        final FragmentManager fragmentManager = getFragmentManager();
-        final FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
-        final SettingsFragment mPrefsFragment = SettingsFragment.newInstance();
-        mFragmentTransaction.replace(android.R.id.content, mPrefsFragment);
-        mFragmentTransaction.commit();
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.settings_fragment, SettingsFragment.newInstance())
+                    .commit();
+        }
 
     }
+
+
 }
