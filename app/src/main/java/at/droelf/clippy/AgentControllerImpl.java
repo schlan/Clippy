@@ -63,9 +63,10 @@ public class AgentControllerImpl implements AgentController{
     @Override
     public void kill(){
         isAlive();
-        stop();
+        stop(false);
         this.killed = true;
         this.floatingView.kill();
+        Global.INSTANCE.getAgentStorage().setAgentStop(false);
     }
 
     @Override
@@ -74,8 +75,14 @@ public class AgentControllerImpl implements AgentController{
     }
 
     @Override
-    public void stop(){
+    public void stop(boolean user){
         isAlive();
+
+        // if agent stopped by user .. stop agent and save state
+        if(user){
+            Global.INSTANCE.getAgentStorage().setAgentStop(true);
+        }
+
         animationIsRunning.set(false);
         handler.removeCallbacks(animationRunnable);
 
@@ -93,15 +100,30 @@ public class AgentControllerImpl implements AgentController{
     }
 
     @Override
-    public void start(){
+    public void start(boolean user){
         isAlive();
-        if(animationIsRunning.compareAndSet(false, true)){
-            handler.post(animationRunnable);
 
-            if(agentControllerListener != null && agentControllerListener.get() != null){
-                agentControllerListener.get().stateChanged(true);
+        final boolean stoppedByUser = Global.INSTANCE.getAgentStorage().isAgentStop();
+        // user -> true ... always start
+        // user -> false || stoppedByUser -> false
+
+        Timber.d(
+                "Start agent: user: %s, stoppedByUser: %s",
+                user, stoppedByUser
+        );
+
+        if(user || (!user && !stoppedByUser)){
+            Timber.d("Starting agent");
+            Global.INSTANCE.getAgentStorage().setAgentStop(false);
+
+            if(animationIsRunning.compareAndSet(false, true)){
+                handler.post(animationRunnable);
+                if(agentControllerListener != null && agentControllerListener.get() != null){
+                    agentControllerListener.get().stateChanged(true);
+                }
             }
-
+        }else{
+            Timber.d("Not starting agent");
         }
     }
 

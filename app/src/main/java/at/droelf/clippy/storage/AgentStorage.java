@@ -12,6 +12,9 @@ public class AgentStorage {
     private final static String AGENT_MUTE = "agent_mute";
     private final static boolean AGENT_MUTE_DEFAULT = false;
 
+    private final static String AGENT_STOP = "agent_stop";
+    private final static boolean AGENT_STOP_DEFAULT = false;
+
     private final static String AGENT_LAST_USED = "agent_lastused";
     private final static AgentType AGENT_LAST_USED_DEFAUlT = AgentType.CLIPPY;
 
@@ -39,6 +42,16 @@ public class AgentStorage {
     public void setAgentLastUsed(AgentType agentLastUsed){
         sharedPreferences.edit()
                 .putString(AGENT_LAST_USED, agentLastUsed.name())
+                .apply();
+    }
+
+    public boolean isAgentStop(){
+        return sharedPreferences.getBoolean(AGENT_STOP, AGENT_STOP_DEFAULT);
+    }
+
+    public void setAgentStop(boolean stop){
+        sharedPreferences.edit()
+                .putBoolean(AGENT_STOP, stop)
                 .apply();
     }
 

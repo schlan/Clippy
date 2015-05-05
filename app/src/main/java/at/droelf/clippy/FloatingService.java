@@ -22,6 +22,9 @@ public class FloatingService extends Service {
     public final static String AGENT_STATE_RUNNING = "agent_state_running";
     public final static String AGENT_STATE_TYPE = "agent_state_type";
 
+    public final static String AGENT_ACTION_USER = "extra_agent_user";
+    public final static boolean AGENT_ACTION_USER_DEFAULT = false;
+
     private final static int NOTIFICATION_ID = 14232;
 
     private final IBinder mBinder = new LocalBinder();
@@ -64,13 +67,15 @@ public class FloatingService extends Service {
 
                 case Start:
                     if(agentController != null && !agentController.isRunning()){
-                        agentController.start();
+                        final boolean user = intent.getBooleanExtra(AGENT_ACTION_USER, AGENT_ACTION_USER_DEFAULT);
+                        agentController.start(user);
                     }
                     break;
 
                 case Stop:
                     if(agentController != null && agentController.isRunning()){
-                        agentController.stop();
+                        final boolean user = intent.getBooleanExtra(AGENT_ACTION_USER, AGENT_ACTION_USER_DEFAULT);
+                        agentController.stop(user);
                     }
                     break;
 

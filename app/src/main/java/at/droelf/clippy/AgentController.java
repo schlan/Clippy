@@ -3,8 +3,8 @@ package at.droelf.clippy;
 import at.droelf.clippy.model.AgentType;
 
 interface AgentController {
-    void start();
-    void stop();
+    void start(boolean user);
+    void stop(boolean user);
     void kill();
     boolean isKilled();
     boolean isRunning();
@@ -15,3 +15,4 @@ interface AgentController {
     boolean isInitialized();
     void setAgentControllerListener(AgentControllerListener agentControllerListener);
 }
+

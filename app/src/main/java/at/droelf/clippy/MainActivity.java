@@ -173,11 +173,11 @@ public class MainActivity extends AppCompatActivity {
                     final boolean started = intent.getBooleanExtra(FloatingService.AGENT_STATE_STARTED, false);
                     final AgentType agentType = (AgentType) intent.getSerializableExtra(FloatingService.AGENT_STATE_TYPE);
 
-                    initFab(fabKill, false, new CommandClickListener(FloatingService.Command.Kill, context));
-                    initFab(fabMute, mute, new CommandClickListener(FloatingService.Command.Mute, context));
-                    initFab(fabUnmute, !mute, new CommandClickListener(FloatingService.Command.UnMute, context));
-                    initFab(fabStart, started, new CommandClickListener(FloatingService.Command.Start, context));
-                    initFab(fabStop, !started, new CommandClickListener(FloatingService.Command.Stop, context));
+                    initFab(fabKill, false, new IntentClickListener(IntentHelper.getCommandIntent(context, FloatingService.Command.Kill), context));
+                    initFab(fabMute, mute, new IntentClickListener(IntentHelper.getCommandIntent(context, FloatingService.Command.Mute), context));
+                    initFab(fabUnmute, !mute, new IntentClickListener(IntentHelper.getCommandIntent(context, FloatingService.Command.UnMute), context));
+                    initFab(fabStart, started, new IntentClickListener(IntentHelper.getStartStopIntent(context, FloatingService.Command.Start, true), context));
+                    initFab(fabStop, !started, new IntentClickListener(IntentHelper.getStartStopIntent(context, FloatingService.Command.Stop, true), context));
 
                     if(agentType != null){
                         ((AgentAdapter)recyclerView.getAdapter()).setSelectedAgent(agentType);
@@ -199,20 +199,19 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
+    class IntentClickListener implements View.OnClickListener{
 
-    class CommandClickListener implements View.OnClickListener{
-
-        private final FloatingService.Command command;
+        private final Intent intent;
         private final Context context;
 
-        public CommandClickListener(FloatingService.Command command, Context context){
-            this.command = command;
+        public IntentClickListener(Intent intent, Context context) {
+            this.intent = intent;
             this.context = context;
         }
 
         @Override
         public void onClick(View v) {
-            context.startService(IntentHelper.getCommandIntent(context, command));
+            context.startService(intent);
         }
     }
 

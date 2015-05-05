@@ -23,7 +23,7 @@ public class NotificationHelper {
         final FloatingService.Command startStopCommand = (isRunning) ? FloatingService.Command.Stop : FloatingService.Command.Start;
         final int startStopDrawable = (isRunning) ? R.drawable.ic_action_stop  : R.drawable.ic_action_play;
         final String startStopString = (isRunning) ? context.getString(R.string.notification_action_stop) : context.getString(R.string.notification_action_start);
-        final PendingIntent startStopPending = PendingIntent.getService(context, 110, IntentHelper.getCommandIntent(context, startStopCommand), PendingIntent.FLAG_CANCEL_CURRENT);
+        final PendingIntent startStopPending = PendingIntent.getService(context, 110, IntentHelper.getStartStopIntent(context, startStopCommand, true), PendingIntent.FLAG_CANCEL_CURRENT);
 
         final FloatingService.Command muteUnmuteCommand = (isMute) ? FloatingService.Command.UnMute : FloatingService.Command.Mute;
         final int muteUnmuteDrawable = (isMute) ? R.drawable.ic_action_volume_on : R.drawable.ic_action_volume_muted;

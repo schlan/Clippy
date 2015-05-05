@@ -17,11 +17,11 @@ public class DeviceUnlock extends BroadcastReceiver {
 
         if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
             Timber.d("Device unlocked - Start");
-            context.startService(IntentHelper.getCommandIntent(context, FloatingService.Command.Start));
+            context.startService(IntentHelper.getStartStopIntent(context, FloatingService.Command.Start, false));
 
         } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
             Timber.d("Device locked - Stop");
-            context.startService(IntentHelper.getCommandIntent(context, FloatingService.Command.Stop));
+            context.startService(IntentHelper.getStartStopIntent(context, FloatingService.Command.Stop, false));
 
         } else if(Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())){
             final AgentType lastUsedAgent = Global.INSTANCE.getAgentStorage().getLastUsedAgent();

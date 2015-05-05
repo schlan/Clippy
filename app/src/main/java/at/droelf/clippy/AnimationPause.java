@@ -4,9 +4,9 @@ import java.util.Random;
 
 public enum AnimationPause {
 
-    Seldom(Global.INSTANCE.getContext().getString(R.string.settings_animation_seldom_id), 30000),
-    Normal(Global.INSTANCE.getContext().getString(R.string.settings_animation_normal_id), 5000),
-    Often(Global.INSTANCE.getContext().getString(R.string.settings_animation_often_id), 1000);
+    Seldom("s", 30000),
+    Normal("n", 5000),
+    Often("o", 1000);
 
     private final String settingsValue;
     private final int basePause;
