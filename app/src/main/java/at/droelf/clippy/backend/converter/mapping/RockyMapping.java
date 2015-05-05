@@ -4,8 +4,8 @@ import at.droelf.clippy.R;
 
 public class RockyMapping implements AgentMapping {
 
-    private final int numberColumns = 28;
-    private final int numberRows = 36;
+    private final static int NUMBER_COLUMNS = 28;
+    private final static int NUMBER_ROWS = 36;
 
     private static final int [] IMAGE_MAPPING = {
             R.drawable.rocky_0000,
@@ -1067,12 +1067,12 @@ public class RockyMapping implements AgentMapping {
 
     @Override
     public int getNumberRows() {
-        return numberRows;
+        return NUMBER_ROWS;
     }
 
     @Override
     public int getNumberColumns() {
-        return numberColumns;
+        return NUMBER_COLUMNS;
     }
 
     @Override

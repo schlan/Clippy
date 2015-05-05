@@ -4,8 +4,8 @@ import at.droelf.clippy.R;
 
 public class GeniusMapping implements AgentMapping{
 
-    private final int numberColumns = 23;
-    private final int numberRows = 31;
+    private final static int NUMBER_COLUMNS = 23;
+    private final static int NUMBER_ROWS = 31;
 
     private static final int [] IMAGE_MAPPING = {
             R.drawable.genius_0000,
@@ -761,12 +761,12 @@ public class GeniusMapping implements AgentMapping{
 
     @Override
     public int getNumberRows() {
-        return numberRows;
+        return NUMBER_ROWS;
     }
 
     @Override
     public int getNumberColumns() {
-        return numberColumns;
+        return NUMBER_COLUMNS;
     }
 
     @Override

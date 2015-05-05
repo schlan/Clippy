@@ -1,9 +1,6 @@
 package at.droelf.clippy.model.gui;
 
-
 import java.util.List;
-
-import at.droelf.clippy.model.raw.Frame;
 
 public class UiAnimation {
 

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     private void initFabs(){
         setFabVisible(false, fabKill, fabMute, fabUnmute, fabStart, fabStop);
         startService(IntentHelper.getCommandIntent(this, FloatingService.Command.State));
-        Timber.d("Init FABS");
+        Timber.d("Init Floating Action Buttons");
     }
 
     private void initFab(FloatingActionButton fab, boolean active, View.OnClickListener onClickListener){
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private BroadcastReceiver agentBroadcastReceiver = new BroadcastReceiver(){
+    private final BroadcastReceiver agentBroadcastReceiver = new BroadcastReceiver(){
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -237,7 +238,8 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
             final AgentAdapterViewHolder viewHolder1 = (AgentAdapterViewHolder) viewHolder;
             final AgentType agentType = agents.get(i);
-            final Drawable drawable = context.getResources().getDrawable(agentType.getAgentMapping().getFirstFrameId());
+
+            final Drawable drawable = ContextCompat.getDrawable(context, agentType.getAgentMapping().getFirstFrameId());
 
             viewHolder1.itemView.setOnClickListener(new AgentClickListener(context, agentType));
             viewHolder1.getImageView().setImageDrawable(drawable);

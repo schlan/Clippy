@@ -24,9 +24,9 @@ public class DeviceUnlock extends BroadcastReceiver {
             context.startService(IntentHelper.getCommandIntent(context, FloatingService.Command.Stop));
 
         } else if(Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())){
-            final AgentType lastUsedAgent = Global.INSTANCE.getClippyStorage().getLastUsedAgent();
+            final AgentType lastUsedAgent = Global.INSTANCE.getAgentStorage().getLastUsedAgent();
             final boolean startOnBoot = Global.INSTANCE.getSettingsStorage().isSettingsStartOnBoot();
-            Timber.d("Device boot completed - Starting Clippy - Agent: %s, startOnBoot: %s", lastUsedAgent, startOnBoot);
+            Timber.d("Device boot completed - Starting agent - Agent: %s, startOnBoot: %s", lastUsedAgent, startOnBoot);
 
             if(startOnBoot){
                 context.startService(IntentHelper.getShowIntent(context, lastUsedAgent));

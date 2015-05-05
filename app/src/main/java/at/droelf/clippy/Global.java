@@ -10,7 +10,7 @@ import at.droelf.clippy.backend.AgentService;
 import at.droelf.clippy.backend.AgentServiceImpl;
 import at.droelf.clippy.backend.source.AgentSource;
 import at.droelf.clippy.backend.source.AgentSourceImpl;
-import at.droelf.clippy.storage.ClippyStorage;
+import at.droelf.clippy.storage.AgentStorage;
 import at.droelf.clippy.storage.SettingsStorage;
 import timber.log.Timber;
 
@@ -20,7 +20,7 @@ public enum Global {
 
     private AgentSource agentSource;
     private AgentService agentService;
-    private ClippyStorage clippyStorage;
+    private AgentStorage agentStorage;
     private SettingsStorage settingsStorage;
     private Timber.Tree logTree;
     private Context context;
@@ -32,7 +32,7 @@ public enum Global {
         this.context = context;
         this.agentSource = new AgentSourceImpl();
         this.agentService = new AgentServiceImpl(agentSource);
-        this.clippyStorage = new ClippyStorage(context);
+        this.agentStorage = new AgentStorage(context);
         this.settingsStorage = new SettingsStorage(context);
 
         this.logTree = new Timber.DebugTree();
@@ -51,9 +51,9 @@ public enum Global {
         return logTree;
     }
 
-    public ClippyStorage getClippyStorage(){
+    public AgentStorage getAgentStorage(){
         checkInit();
-        return clippyStorage;
+        return agentStorage;
     }
 
     public SettingsStorage getSettingsStorage(){
@@ -61,11 +61,18 @@ public enum Global {
         return settingsStorage;
     }
 
+    public Context getContext(){
+        checkInit();
+        return context;
+    }
+
     private void checkInit(){
         if(!init){
             throw new RuntimeException("Global context not initialized");
         }
     }
+
+
 
 
 }

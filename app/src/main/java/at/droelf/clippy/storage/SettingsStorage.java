@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import at.droelf.clippy.AnimationPause;
-import at.droelf.clippy.model.raw.Animation;
 
 public class SettingsStorage {
 

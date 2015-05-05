@@ -1,8 +1,27 @@
 <resources>
-    <string name="app_name">Clippy</string>
 
-    <string name="hello_world">Hello world!</string>
+
+    <!-- Notification -->
+    <string name="notification_action_stop">Stop</string>
+    <string name="notification_action_start">Start</string>
+    <string name="notification_action_unmute">Unmute</string>
+    <string name="notification_action_mute">Mute</string>
+    <string name="notification_action_quit">Quit</string>
+    <string name="notification_content">Revenge of the paperclip</string>
+
+    <!-- AB actions -->
     <string name="action_settings">Settings</string>
+    <string name="action_support">Support</string>
+
+    <!-- Support -->
+    <string name="support_textview_hint">Feedback</string>
+    <string name="support_textview_user_name">Name</string>
+    <string name="support_textview_user_email">E-Mail</string>
+
+    <!-- Settings -->
+    <string name="settings_autostart_title">Autostart</string>
+    <string name="settings_animation_frequency">Animation frequency</string>
+    <string name="settings_animation_dialog_text">Please select</string>
 
     <string name="setting_animation_often">Often</string>
     <string name="setting_animation_normal">Normal</string>

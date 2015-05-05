@@ -5,15 +5,15 @@
     android:layout_height="match_parent">
 
     <CheckBoxPreference
-        android:title="Autostart"
+        android:title="@string/settings_autostart_title"
         android:defaultValue="true"
         android:summary="Launch your last used agent after boot."
         android:key="settings_start_boot" />
 
     <ListPreference
         android:key="settings_animation_pause"
-        android:title="Animation frequency"
-        android:dialogTitle="Please select"
+        android:title="@string/settings_animation_frequency"
+        android:dialogTitle="@string/settings_animation_dialog_text"
         android:entries="@array/settings_animation_gap"
         android:entryValues="@array/settings_animation_gap_id"
         android:defaultValue="n" />

@@ -2,7 +2,7 @@ package at.droelf.clippy;
 
 import at.droelf.clippy.model.AgentType;
 
-public interface AgentController {
+interface AgentController {
     void start();
     void stop();
     void kill();

@@ -5,8 +5,8 @@ import at.droelf.clippy.R;
 
 public class LinksMapping implements AgentMapping{
 
-    private final int numberColumns = 24;
-    private final int numberRows = 31;
+    private final static int NUMBER_COLUMNS = 24;
+    private final static int NUMBER_ROWS = 31;
 
     private final static int[] SOUND_MAPPING = {
             R.raw.links_snd_01,
@@ -791,12 +791,12 @@ public class LinksMapping implements AgentMapping{
 
     @Override
     public int getNumberRows() {
-        return numberRows;
+        return NUMBER_ROWS;
     }
 
     @Override
     public int getNumberColumns() {
-        return numberColumns;
+        return NUMBER_COLUMNS;
     }
 
     @Override

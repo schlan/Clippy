@@ -7,5 +7,5 @@ import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.model.raw.Agent;
 
 public interface AgentSource {
-    public O<Agent> getAgent(Context context, AgentType agentType);
+    O<Agent> getAgent(Context context, AgentType agentType);
 }

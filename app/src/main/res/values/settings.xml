@@ -2,9 +2,9 @@
 <resources>
 
     <array name="settings_animation_gap_id">
-        <item>o</item>
-        <item>n</item>
-        <item>s</item>
+        <item>@string/settings_animation_often_id</item>
+        <item>@string/settings_animation_normal_id</item>
+        <item>@string/settings_animation_seldom_id</item>
     </array>
 
     <array name="settings_animation_gap">

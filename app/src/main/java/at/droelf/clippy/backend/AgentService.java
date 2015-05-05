@@ -7,5 +7,5 @@ import at.droelf.clippy.model.gui.UiAgent;
 import at.droelf.clippy.utils.O;
 
 public interface AgentService {
-    public O<UiAgent> getUiAgent(Context context, AgentType agentType);
+    O<UiAgent> getUiAgent(Context context, AgentType agentType);
 }

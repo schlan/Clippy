@@ -3,7 +3,7 @@ package at.droelf.clippy.utils;
 public class O<E>{
 
     private E data;
-    private boolean success;
+    private final boolean success;
     private String error;
 
     public O(E data){

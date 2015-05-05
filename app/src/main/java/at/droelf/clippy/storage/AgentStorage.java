@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import at.droelf.clippy.model.AgentType;
 
-public class ClippyStorage {
+public class AgentStorage {
 
     private final static String NAME = "agent_storage";
 
@@ -17,7 +17,7 @@ public class ClippyStorage {
 
     private final SharedPreferences sharedPreferences;
 
-    public ClippyStorage(Context context){
+    public AgentStorage(Context context){
         this.sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
     }
 

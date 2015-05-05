@@ -22,7 +22,7 @@
             android:id="@+id/help_user_feedback"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Feedback"
+            android:hint="@string/support_textview_hint"
             app:met_floatingLabel="highlight"
             app:met_primaryColor="?colorAccent"
             android:gravity="top|left"

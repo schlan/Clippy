@@ -46,10 +46,10 @@ public class FloatingService extends Service {
                 case Show:
                     if(agentController == null){
                         final AgentType agentType = (AgentType) intent.getSerializableExtra(AgentType.KEY);
-                        Global.INSTANCE.getClippyStorage().setAgentLastUsed(agentType);
+                        Global.INSTANCE.getAgentStorage().setAgentLastUsed(agentType);
 
                         this.agentController = new AgentControllerImpl(agentType, getApplicationContext(), Global.INSTANCE.getAgentService());
-                        if(Global.INSTANCE.getClippyStorage().isMute()){
+                        if(Global.INSTANCE.getAgentStorage().isMute()){
                             agentController.mute();
                         }else{
                             agentController.unMute();
@@ -110,11 +110,11 @@ public class FloatingService extends Service {
         return START_NOT_STICKY;
     }
 
-    private AgentControllerListener agentControllerListener = new AgentControllerListener() {
+    private final AgentControllerListener agentControllerListener = new AgentControllerListener() {
         @Override
         public void volumeChanged(boolean mute) {
             Timber.d("AgentControllerListener mute: %s", mute);
-            Global.INSTANCE.getClippyStorage().setMute(mute);
+            Global.INSTANCE.getAgentStorage().setMute(mute);
             sendAgentState();
         }
 
@@ -167,7 +167,7 @@ public class FloatingService extends Service {
     public enum Command{
         Show, Start, Stop, Kill, Mute, UnMute, State;
 
-        public static String KEY = "COMMAND";
+        public static final String KEY = "COMMAND";
     }
 
 }

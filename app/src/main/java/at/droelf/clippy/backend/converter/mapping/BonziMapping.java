@@ -7,7 +7,7 @@ public class BonziMapping implements AgentMapping{
     private final static int NUMBER_COLUMNS = 17;
     private final static int NUMBER_ROWS = 21;
 
-    public static final int [] IMAGE_MAPPING = {
+    private static final int [] IMAGE_MAPPING = {
             R.drawable.bonzi_0000,
             R.drawable.bonzi_0001,
             R.drawable.bonzi_0002,
@@ -367,7 +367,7 @@ public class BonziMapping implements AgentMapping{
             R.drawable.bonzi_0356
     };
 
-    public static final int[] SOUND_MAPPING = {
+    private static final int[] SOUND_MAPPING = {
             R.raw.bonzi_snd_01,
             R.raw.bonzi_snd_02,
             R.raw.bonzi_snd_03,

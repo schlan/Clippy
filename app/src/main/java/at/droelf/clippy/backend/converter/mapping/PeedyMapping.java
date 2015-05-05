@@ -7,7 +7,7 @@ public class PeedyMapping implements AgentMapping {
     private final static int NUMBER_COLUMNS = 25;
     private final static int NUMBER_ROWS = 32;
 
-    public final static int[] IMAGE_MAPPING = {
+    private final static int[] IMAGE_MAPPING = {
             R.drawable.peedy_0000,
             R.drawable.peedy_0001,
             R.drawable.peedy_0002,
@@ -810,7 +810,7 @@ public class PeedyMapping implements AgentMapping {
             R.drawable.peedy_0799
     };
 
-    public static final int [] SOUND_MAPPING = {
+    private static final int [] SOUND_MAPPING = {
             R.raw.peedy_snd_01,
             R.raw.peedy_snd_02,
             R.raw.peedy_snd_03,

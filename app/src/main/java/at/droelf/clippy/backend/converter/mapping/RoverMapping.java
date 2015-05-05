@@ -8,7 +8,7 @@ public class RoverMapping implements AgentMapping{
     private final static int NUMBER_COLUMNS = 27;
     private final static int NUMBER_ROWS = 27;
 
-    public static final int [] IMAGE_MAPPING = {
+    private static final int [] IMAGE_MAPPING = {
         R.drawable.rover_0000,
                 R.drawable.rover_0001,
                 R.drawable.rover_0002,
@@ -740,7 +740,7 @@ public class RoverMapping implements AgentMapping{
                 R.drawable.rover_0728
     };
 
-    public static final int[] SOUND_MAPPING = {
+    private static final int[] SOUND_MAPPING = {
             R.raw.rover_snd_01,
             R.raw.rover_snd_02,
             R.raw.rover_snd_03,

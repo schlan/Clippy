@@ -57,7 +57,7 @@ public class AgentConverterImpl implements AgentConverter {
                     frame.getDuration(),
                     convertImageListToId(frame.getImages(), agent),
                     frame.getExitBranch(),
-                    convetBranchingToUiBranches(frame.getBranching()),
+                    convertBranchingToUiBranches(frame.getBranching()),
                     (frame.getSound() != null ) ? agentMapping.getSoundMapping()[frame.getSound() - 1] : null
             );
             uiAnimationList.add(uiFrame);
@@ -67,7 +67,7 @@ public class AgentConverterImpl implements AgentConverter {
     }
 
 
-    private List<UiBranch> convetBranchingToUiBranches(Branching branching){
+    private List<UiBranch> convertBranchingToUiBranches(Branching branching){
         if(branching == null){
             return null;
         }

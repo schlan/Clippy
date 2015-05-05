@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Clippy</string>
+
+    <string name="settings_animation_often_id">o</string>
+    <string name="settings_animation_normal_id">n</string>
+    <string name="settings_animation_seldom_id">s</string>
+
+    <string name="content_description_agent_picture">Agent picture</string>
+</resources>

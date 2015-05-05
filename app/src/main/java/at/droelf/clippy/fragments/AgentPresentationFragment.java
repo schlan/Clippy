@@ -1,9 +1,9 @@
 package at.droelf.clippy.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +40,7 @@ public class AgentPresentationFragment extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final AgentType agentType = (AgentType) getArguments().getSerializable(AgentType.KEY);
-        agentImage.setImageDrawable(getResources().getDrawable(agentType.getAgentMapping().getFirstFrameId()));
-
+        agentImage.setImageDrawable(ContextCompat.getDrawable(getActivity(), agentType.getAgentMapping().getFirstFrameId()));
     }
 
 

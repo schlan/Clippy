@@ -16,14 +16,14 @@ public enum AgentType {
     BONZI("agent_bonzi.json", new BonziMapping(), true)
     ;
 
-    public static String KEY = "extra_agenttype";
+    public static final String KEY = "extra_agent_type";
 
-    private String assetName;
-    private AgentMapping agentMapping;
-    private boolean broken;
+    private final String assetName;
+    private final AgentMapping agentMapping;
+    private final boolean broken;
 
-    AgentType(String assetNamem, AgentMapping agentMapping, boolean broken) {
-        this.assetName = assetNamem;
+    AgentType(String assetName, AgentMapping agentMapping, boolean broken) {
+        this.assetName = assetName;
         this.agentMapping = agentMapping;
         this.broken = broken;
     }

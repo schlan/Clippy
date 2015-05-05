@@ -3,6 +3,7 @@ package at.droelf.clippy.view;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import at.droelf.clippy.Global;
 import timber.log.Timber;
 
 public class FloatingView extends FrameLayout implements View.OnTouchListener {
@@ -56,11 +56,8 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
     }
 
     @Override
-    public void addView(View v){
+    public void addView(@NonNull View v){
         isAlive();
-        if(v == null){
-            throw new IllegalArgumentException("Provided view is null :(");
-        }
         Timber.d("Add View: %s", v);
         this.removeAllViews();
         this.childView = v;
@@ -103,7 +100,7 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
         windowManager.updateViewLayout(this, layoutParams);
     }
 
-    class GestureListener extends GestureDetector.SimpleOnGestureListener {
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             Timber.d("Single tap detected");
@@ -150,15 +147,15 @@ public class FloatingView extends FrameLayout implements View.OnTouchListener {
     private void isAlive(){
         if(killed){
             Timber.e("View is dead, leave it alone!");
-            throw new RuntimeException("FlatingView is dead x.x");
+            throw new RuntimeException("Floatingview is dead x.x");
         }
     }
 
 
     public interface FloatingViewCLickListener {
-        public void onSingleTap(View v);
-        public void onDoubleTap(View v);
-        public void onLongPress(View v);
+        void onSingleTap(View v);
+        void onDoubleTap(View v);
+        void onLongPress(View v);
     }
 
 }

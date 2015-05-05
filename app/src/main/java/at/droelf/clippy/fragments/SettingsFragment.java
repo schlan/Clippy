@@ -5,12 +5,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-
-import at.droelf.clippy.Global;
 import at.droelf.clippy.R;
 import at.droelf.clippy.storage.SettingsStorage;
 
@@ -29,11 +23,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPreferenceManager().setSharedPreferencesName(SettingsStorage.NAME);
-        addPreferencesFromResource(R.layout.fragment_settings);
-        initPrefernces();
+        addPreferencesFromResource(R.xml.fragment_settings);
+        initPreferences();
     }
 
-    private void initPrefernces(){
+    private void initPreferences(){
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         final Preference preference = findPreference(SettingsStorage.SETTINGS_ANIMATION_PAUSE);
         preference.setSummary(((ListPreference)preference).getEntry());

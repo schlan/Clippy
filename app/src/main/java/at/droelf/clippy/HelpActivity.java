@@ -44,8 +44,10 @@ public class HelpActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         initSdk();
 
         if(SdkStorage.INSTANCE.identity().getIdentity() == null){
@@ -142,8 +144,8 @@ public class HelpActivity extends AppCompatActivity {
         UserRegistration(UserHelpFragment.newInstance(), "fragment_user_reg"),
         FeedBack(FeedBackHelpFragment.newInstance(), "fragment_feedback");
 
-        private Fragment fragment;
-        private String tag;
+        private final Fragment fragment;
+        private final String tag;
 
         ScreenState(Fragment fragment, String tag){
             this.fragment = fragment;

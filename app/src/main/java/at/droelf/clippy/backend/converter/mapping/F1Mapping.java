@@ -4,8 +4,8 @@ import at.droelf.clippy.R;
 
 public class F1Mapping implements AgentMapping{
 
-    private final int numberColumns = 26;
-    private final int numberRows = 35;
+    private final static int NUMBER_COLUMNS = 26;
+    private final static int NUMBER_ROWS = 35;
 
     private static final int[] IMAGE_MAPPING = {
             R.drawable.f1_0000,
@@ -920,7 +920,7 @@ public class F1Mapping implements AgentMapping{
             R.drawable.f1_0909
     };
 
-    public static final int[] SOUND_MAPPING = {
+    private static final int[] SOUND_MAPPING = {
             R.raw.f1_snd_01,
             R.raw.f1_snd_02,
             R.raw.f1_snd_03,
@@ -966,12 +966,12 @@ public class F1Mapping implements AgentMapping{
 
     @Override
     public int getNumberRows() {
-        return numberRows;
+        return NUMBER_ROWS;
     }
 
     @Override
     public int getNumberColumns() {
-        return numberColumns;
+        return NUMBER_COLUMNS;
     }
 
     @Override

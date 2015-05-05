@@ -3,6 +3,7 @@ package at.droelf.clippy.utils;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class AnimationUtil {
             final List<Integer> imageIds = uiFrame.getImageIds();
 
             for(int j = 0; j < imageIds.size(); j++){
-                final Drawable drawable = context.getResources().getDrawable(imageIds.get(j));
+                final Drawable drawable = ContextCompat.getDrawable(context, imageIds.get(j));
                 drawables.get(j).addFrame(drawable, uiFrame.getDuration());
             }
         }

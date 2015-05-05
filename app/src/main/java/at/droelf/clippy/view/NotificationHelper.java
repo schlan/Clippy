@@ -16,24 +16,23 @@ import at.droelf.clippy.utils.StringUtils;
 
 public class NotificationHelper {
 
-
     public static Notification getNotification(Context context, AgentType agentType, boolean isRunning, boolean isMute){
 
         final PendingIntent startMainActivity = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT);
 
         final FloatingService.Command startStopCommand = (isRunning) ? FloatingService.Command.Stop : FloatingService.Command.Start;
         final int startStopDrawable = (isRunning) ? R.drawable.ic_action_stop  : R.drawable.ic_action_play;
-        final String startStopString = (isRunning) ? "Stop" : "Start";
+        final String startStopString = (isRunning) ? context.getString(R.string.notification_action_stop) : context.getString(R.string.notification_action_start);
         final PendingIntent startStopPending = PendingIntent.getService(context, 110, IntentHelper.getCommandIntent(context, startStopCommand), PendingIntent.FLAG_CANCEL_CURRENT);
 
         final FloatingService.Command muteUnmuteCommand = (isMute) ? FloatingService.Command.UnMute : FloatingService.Command.Mute;
         final int muteUnmuteDrawable = (isMute) ? R.drawable.ic_action_volume_on : R.drawable.ic_action_volume_muted;
-        final String muteUnmuteString = (isMute) ? "Unmute" : "Mute";
+        final String muteUnmuteString = (isMute) ? context.getString(R.string.notification_action_unmute) : context.getString(R.string.notification_action_mute);
         final PendingIntent muteUnmutePending = PendingIntent.getService(context, 120, IntentHelper.getCommandIntent(context, muteUnmuteCommand), PendingIntent.FLAG_CANCEL_CURRENT);
 
         final PendingIntent killPending = PendingIntent.getService(context, 130, IntentHelper.getCommandIntent(context, FloatingService.Command.Kill), PendingIntent.FLAG_CANCEL_CURRENT);
 
-        final String content = "The revenge of Clippy";
+        final String content = context.getString(R.string.notification_content);
         final String title = StringUtils.capitalize(agentType.name());
 
         return new NotificationCompat.Builder(context)
@@ -47,7 +46,7 @@ public class NotificationHelper {
 
                 .addAction(startStopDrawable, startStopString, startStopPending)
                 .addAction(muteUnmuteDrawable, muteUnmuteString, muteUnmutePending)
-                .addAction(R.drawable.ic_action_cancel, "Kill", killPending)
+                .addAction(R.drawable.ic_action_cancel, context.getString(R.string.notification_action_quit), killPending)
                 .build();
     }
 

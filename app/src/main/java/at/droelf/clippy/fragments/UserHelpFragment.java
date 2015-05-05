@@ -1,6 +1,7 @@
 package at.droelf.clippy.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Patterns;
@@ -52,8 +53,8 @@ public class UserHelpFragment extends Fragment{
                 boolean validEmail = emailEditText.validateWith(new RegexpValidator("Invalid email", Patterns.EMAIL_ADDRESS.pattern()));
                 boolean validName = userNameEditText.validateWith(new METValidator("Name too short") {
                     @Override
-                    public boolean isValid(CharSequence charSequence, boolean b) {
-                        return charSequence != null && charSequence.length() > 2;
+                    public boolean isValid(@NonNull CharSequence charSequence, boolean b) {
+                        return charSequence.length() > 2;
                     }
                 });
 

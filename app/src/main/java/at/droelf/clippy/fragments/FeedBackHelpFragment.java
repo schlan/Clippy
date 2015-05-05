@@ -1,7 +1,7 @@
 package at.droelf.clippy.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,7 +19,6 @@ import com.zendesk.sdk.model.network.ErrorResponse;
 import com.zendesk.sdk.network.impl.ZendeskCallback;
 import com.zendesk.sdk.network.impl.ZendeskConfig;
 
-import at.droelf.clippy.HelpActivity;
 import at.droelf.clippy.R;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -52,8 +51,8 @@ public class FeedBackHelpFragment extends Fragment {
             public void onClick(View v) {
                 boolean validName = userFeedBackEditText.validateWith(new METValidator("Feedback too short") {
                     @Override
-                    public boolean isValid(CharSequence charSequence, boolean b) {
-                        return charSequence != null && charSequence.length() > 1;
+                    public boolean isValid(@NonNull CharSequence charSequence, boolean b) {
+                        return charSequence.length() > 1;
                     }
                 });
 

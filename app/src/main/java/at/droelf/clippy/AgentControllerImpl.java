@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -38,11 +39,11 @@ public class AgentControllerImpl implements AgentController{
     private List<ImageView> imageLayer;
     private ProgressBar progressBar;
 
-    private Handler handler;
+    private final Handler handler;
     private AnimationRunnable animationRunnable;
 
-    private AtomicBoolean animationIsRunning = new AtomicBoolean(true);
-    private AtomicBoolean isMute = new AtomicBoolean(false);
+    private final AtomicBoolean animationIsRunning = new AtomicBoolean(true);
+    private final AtomicBoolean isMute = new AtomicBoolean(false);
     private boolean killed = false;
     private boolean initialized = false;
     private WeakReference<AgentControllerListener> agentControllerListener;
@@ -143,7 +144,7 @@ public class AgentControllerImpl implements AgentController{
 
     @Override
     public void setAgentControllerListener(AgentControllerListener agentControllerListener) {
-        this.agentControllerListener = new WeakReference<AgentControllerListener>(agentControllerListener);
+        this.agentControllerListener = new WeakReference<>(agentControllerListener);
     }
 
 
@@ -173,7 +174,8 @@ public class AgentControllerImpl implements AgentController{
             }
 
             progressBar.setVisibility(View.GONE);
-            imageLayer.get(0).setBackgroundDrawable(context.getResources().getDrawable(agent.getFirstImage()));
+
+            imageLayer.get(0).setBackgroundDrawable(ContextCompat.getDrawable(context, agent.getFirstImage()));
             initialized = true;
 
             Timber.d("Initial start animation");
@@ -233,13 +235,14 @@ public class AgentControllerImpl implements AgentController{
 
     private void resetImages(){
         isAlive();
-        imageLayer.get(0).setBackgroundDrawable(context.getResources().getDrawable(getAgentType().getAgentMapping().getFirstFrameId()));
+        imageLayer.get(0).setBackgroundDrawable(ContextCompat.getDrawable(context, getAgentType().getAgentMapping().getFirstFrameId()));
+
         for(int i = 1; i < imageLayer.size(); i++){
-            imageLayer.get(i).setBackgroundDrawable(context.getResources().getDrawable(getAgentType().getAgentMapping().getEmptyFrameId()));
+            imageLayer.get(i).setBackgroundDrawable(ContextCompat.getDrawable(context, getAgentType().getAgentMapping().getEmptyFrameId()));
         }
     }
 
-    private AsyncTask<AgentType, Void, O<UiAgent>> loadAgentData = new AsyncTask<AgentType, Void, O<UiAgent>>(){
+    private final AsyncTask<AgentType, Void, O<UiAgent>> loadAgentData = new AsyncTask<AgentType, Void, O<UiAgent>>(){
         @Override
         protected O<UiAgent> doInBackground(AgentType... agentTypes) {
             return agentService.getUiAgent(context, agentTypes[0]);
@@ -276,7 +279,7 @@ public class AgentControllerImpl implements AgentController{
 
     private class AnimationRunnable implements Runnable {
 
-        private UiAgent agent;
+        private final UiAgent agent;
 
         public AnimationRunnable(UiAgent agent){
             this.agent = agent;
@@ -285,8 +288,8 @@ public class AgentControllerImpl implements AgentController{
         @Override
         public void run() {
             Timber.d(
-                "Execute animationRunnable: imagelayer null: %s, #imagelayer: %s, killed: %s, animationRunning: %s",
-                imageLayer == null, imageLayer.size(), killed, animationIsRunning.get()
+                "Execute animationRunnable: image layer null: %s, #imagelayer: %s, killed: %s, animationRunning: %s",
+                imageLayer == null, (imageLayer != null) ? imageLayer.size() : 0, killed, animationIsRunning.get()
             );
 
             if(imageLayer != null && imageLayer.size() > 0 && !killed && animationIsRunning.get()){
@@ -295,7 +298,7 @@ public class AgentControllerImpl implements AgentController{
                 final List<AnimationDrawable> animationDrawables = animationDrawable.getAnimationDrawables();
 
                 for(ImageView imageView : imageLayer){
-                    imageView.setBackgroundDrawable(context.getResources().getDrawable(agentType.getAgentMapping().getEmptyFrameId()));
+                    imageView.setBackgroundDrawable(ContextCompat.getDrawable(context, agentType.getAgentMapping().getEmptyFrameId()));
                 }
 
                 final CustomAnimationDrawableNew firstLayer = new CustomAnimationDrawableNew(animationDrawable.getAnimationDrawables().get(0)){
