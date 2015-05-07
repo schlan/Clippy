@@ -8,7 +8,6 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -50,8 +49,8 @@ public class UserHelpFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
-                boolean validEmail = emailEditText.validateWith(new RegexpValidator("Invalid email", Patterns.EMAIL_ADDRESS.pattern()));
-                boolean validName = userNameEditText.validateWith(new METValidator("Name too short") {
+                boolean validEmail = emailEditText.validateWith(new RegexpValidator(getString(R.string.support_textview_email_error), Patterns.EMAIL_ADDRESS.pattern()));
+                boolean validName = userNameEditText.validateWith(new METValidator(getString(R.string.support_textview_user_error)) {
                     @Override
                     public boolean isValid(@NonNull CharSequence charSequence, boolean b) {
                         return charSequence.length() > 2;
@@ -59,7 +58,6 @@ public class UserHelpFragment extends Fragment{
                 });
 
                 if (validEmail && validName) {
-                    Toast.makeText(getActivity(), "Valid -> next", Toast.LENGTH_LONG).show();
                     final Identity build = new AnonymousIdentity.Builder().withNameIdentifier(userNameEditText.getText().toString()).withEmailIdentifier(emailEditText.getText().toString()).build();
                     ZendeskConfig.INSTANCE.setIdentity(build);
                     if (getActivity() != null) {

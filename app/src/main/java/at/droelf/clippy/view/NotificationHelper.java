@@ -46,7 +46,7 @@ public class NotificationHelper {
 
                 .addAction(startStopDrawable, startStopString, startStopPending)
                 .addAction(muteUnmuteDrawable, muteUnmuteString, muteUnmutePending)
-                .addAction(R.drawable.ic_action_cancel, context.getString(R.string.notification_action_quit), killPending)
+//                .addAction(R.drawable.ic_action_cancel, context.getString(R.string.notification_action_quit), killPending)
                 .build();
     }
 

@@ -18,6 +18,14 @@
     <string name="support_textview_user_name">Name</string>
     <string name="support_textview_user_email">E-Mail</string>
 
+    <string name="support_textview_user_error">Name too short.</string>
+    <string name="support_textview_email_error">Invalid email address.</string>
+    <string name="support_textview_feedback_error">Feedback too short.</string>
+
+    <string name="support_textview_sent">Successfully submitted.</string>
+    <string name="support_textview_sent_error">Error. Please try again.</string>
+
+
     <!-- Settings -->
     <string name="settings_autostart_title">Autostart</string>
     <string name="settings_animation_frequency">Animation frequency</string>

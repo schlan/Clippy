@@ -49,7 +49,7 @@ public class FeedBackHelpFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean validName = userFeedBackEditText.validateWith(new METValidator("Feedback too short") {
+                boolean validName = userFeedBackEditText.validateWith(new METValidator(getString(R.string.support_textview_feedback_error)) {
                     @Override
                     public boolean isValid(@NonNull CharSequence charSequence, boolean b) {
                         return charSequence.length() > 1;
@@ -86,7 +86,7 @@ public class FeedBackHelpFragment extends Fragment {
             zendeskFeedbackConnector.sendFeedback(feedback, null, createRequestZendeskCallback);
         }else{
             setLoading(false);
-            Toast.makeText(getActivity(), "Failure during submitting comment ;(", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.support_textview_sent_error), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -96,14 +96,14 @@ public class FeedBackHelpFragment extends Fragment {
 
         @Override
         public void onSuccess(CreateRequest o) {
-            Toast.makeText(getActivity(), "Successfully sent ... thanks :)", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.support_textview_sent), Toast.LENGTH_LONG).show();
             FeedBackHelpFragment.this.getActivity().finish();
         }
 
         @Override
         public void onError(ErrorResponse errorResponse) {
             setLoading(false);
-            Toast.makeText(getActivity(), "Failure during submitting comment ;(", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.support_textview_sent_error), Toast.LENGTH_LONG).show();
         }
     };
 }

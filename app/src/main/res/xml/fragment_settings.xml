@@ -18,4 +18,15 @@
         android:entryValues="@array/settings_animation_gap_id"
         android:defaultValue="n" />
 
+    <PreferenceCategory
+        android:title="Misc"
+        >
+        <Preference
+            android:key="settings_contact"
+            android:title="Contact"/>
+        <Preference
+            android:key="settings_app_version"
+            android:title="Version" />
+
+    </PreferenceCategory>
 </PreferenceScreen>

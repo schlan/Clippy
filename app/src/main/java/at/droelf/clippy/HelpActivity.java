@@ -100,11 +100,11 @@ public class HelpActivity extends AppCompatActivity {
             }
 
             @Override
-            public String getAdditionalInfo() { return ""; }
+            public String getAdditionalInfo() { return null; }
 
             @Override
             public String getRequestSubject() {
-                return "I'm your biggest fan";
+                return "Feedback - Ticket";
             }
         });
 
