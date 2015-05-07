@@ -9,12 +9,17 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +30,7 @@ import android.widget.ImageView;
 
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.zendesk.sdk.rating.ui.RateMyAppDialog;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,10 +82,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        showRma();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         registerReceiver(agentBroadcastReceiver, new IntentFilter(FloatingService.AGENT_STATE_ACTION));
         initFabs();
+
     }
 
     @Override
@@ -106,6 +119,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showRma(){
+        final RateMyAppDialog mRateMyAppDialog = new RateMyAppDialog.Builder(this)
+            .withAndroidStoreRatingButton()
+            .withDontRemindMeAgainButton()
+            .build();
+//        mRateMyAppDialog.showAlways(this);
+        //TODO
+      mRateMyAppDialog.show(this);
     }
 
     private void initFabs(){

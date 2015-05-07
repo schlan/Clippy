@@ -1,10 +1,9 @@
 package at.droelf.clippy;
 
-
-
 import android.content.Context;
 
 import com.zendesk.sdk.logger.Logger;
+import com.zendesk.sdk.network.impl.ZendeskConfig;
 
 import at.droelf.clippy.backend.AgentService;
 import at.droelf.clippy.backend.AgentServiceImpl;
@@ -38,6 +37,7 @@ public enum Global {
         this.logTree = new Timber.DebugTree();
         Logger.setLoggable(true);
 
+        initZendesk(context);
         init = true;
     }
 
@@ -71,6 +71,11 @@ public enum Global {
             throw new RuntimeException("Global context not initialized");
         }
     }
+
+    private void initZendesk(Context context){
+        ZendeskConfig.INSTANCE.init(context, "https://clippy.zendesk.com", "c4c73bee174db74b69c8057010b859141b6093eb439182ea", "mobile_sdk_client_0ad88c1b1ed31aadc633");
+    }
+
 
 
 

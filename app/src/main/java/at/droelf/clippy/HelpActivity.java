@@ -92,7 +92,6 @@ public class HelpActivity extends AppCompatActivity {
                 BuildConfig.VERSION_NAME
         );
 
-        ZendeskConfig.INSTANCE.init(this, "https://clippy.zendesk.com", "c4c73bee174db74b69c8057010b859141b6093eb439182ea", "mobile_sdk_client_0ad88c1b1ed31aadc633");
         ZendeskConfig.INSTANCE.setContactConfiguration(new ZendeskFeedbackConfiguration() {
             @Override
             public List<String> getTags() {
