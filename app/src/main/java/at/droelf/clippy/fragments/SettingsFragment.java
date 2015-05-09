@@ -7,9 +7,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Html;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 import at.droelf.clippy.BuildConfig;
 import at.droelf.clippy.HelpActivity;

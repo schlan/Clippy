@@ -4,8 +4,6 @@ package at.droelf.clippy.utils;
 import android.content.Context;
 import android.content.Intent;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-
 import at.droelf.clippy.FloatingService;
 import at.droelf.clippy.model.AgentType;
 
