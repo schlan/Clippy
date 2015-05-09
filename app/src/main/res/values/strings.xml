@@ -49,7 +49,7 @@
         <![CDATA[
             <h2>Credits</h2>
             <p>
-                A huge thanks to <a href="https://www.smore.com">https://www.smore.com</a> for providing
+                A huge thanks to <a href="https://www.smore.com">smore</a> for providing
                 <a href="https://github.com/smore-inc/clippy.js">clippy.js</a>
             </p>
             <h3>Libraries</h3>
@@ -62,6 +62,7 @@
                     <li><a href="https://github.com/JakeWharton/butterknife">butterknife</a></li>
                     <li><a href="https://github.com/futuresimple/android-floating-action-button">loatingactionbutton</a></li>
                     <li><a href="https://github.com/rengwuxian/MaterialEditText">materialedittext</a></li>
+                    <li><a href="https://developer.zendesk.com/embeddables/docs/android/overview">Zendesk Android SDK</a></li>
                 </ul>
             <br />
             Logo design by <a href="https://www.freelancer.com/u/carlaschartner.html">Carla Schartner</a>
