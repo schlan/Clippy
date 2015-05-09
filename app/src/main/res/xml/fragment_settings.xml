@@ -22,11 +22,14 @@
         android:title="Misc"
         >
         <Preference
+            android:key="settings_credits"
+            android:title="@string/setting_credits"/>
+        <Preference
             android:key="settings_contact"
-            android:title="Contact"/>
+            android:title="@string/setting_contact"/>
         <Preference
             android:key="settings_app_version"
-            android:title="Version" />
+            android:title="@string/setting_version" />
 
     </PreferenceCategory>
 </PreferenceScreen>

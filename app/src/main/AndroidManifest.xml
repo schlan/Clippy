@@ -39,12 +39,12 @@
 
         <activity
             android:name=".HelpActivity"
-            android:label="Support"
+            android:label="@string/activity_support"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".SettingsActivity"
-            android:label="Settings" />
+            android:label="@string/activity_settings" />
 
     </application>
 

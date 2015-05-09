@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.v7.app.AlertDialog;
+import android.text.Html;
+import android.webkit.WebView;
+import android.widget.TextView;
 
 import at.droelf.clippy.BuildConfig;
 import at.droelf.clippy.HelpActivity;
@@ -45,6 +49,25 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 startActivity(new Intent(SettingsFragment.this.getActivity(), HelpActivity.class));
+                return true;
+            }
+        });
+
+        final Preference credtis = findPreference("settings_credits");
+        credtis.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                WebView webView = new WebView(getActivity());
+                webView.loadDataWithBaseURL(null, getString(R.string.setting_credits_text), "text/html", "utf-8", null);
+
+//                msg.setText(getText(R.string.setting_credits_text));
+                final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                        .setView(webView)
+                        .setCancelable(true)
+                        .create();
+                dialog.show();
+
                 return true;
             }
         });

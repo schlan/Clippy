@@ -1,6 +1,10 @@
 <resources>
 
 
+    <!-- Activities -->
+    <string name="activity_settings">Settings</string>
+    <string name="activity_support">Support</string>
+
     <!-- Notification -->
     <string name="notification_action_stop">Stop</string>
     <string name="notification_action_start">Start</string>
@@ -34,4 +38,33 @@
     <string name="setting_animation_often">Often</string>
     <string name="setting_animation_normal">Normal</string>
     <string name="setting_animation_seldom">Seldom</string>
+
+    <string name="setting_header_misc">Misc</string>
+    <string name="setting_contact">Contact</string>
+    <string name="setting_version">Version</string>
+    <string name="setting_credits">Credits</string>
+
+
+    <string name="setting_credits_text">
+        <![CDATA[
+            <h2>Credits</h2>
+            <p>
+                A huge thanks to <a href="https://www.smore.com">https://www.smore.com</a> for providing
+                <a href="https://github.com/smore-inc/clippy.js">clippy.js</a>
+            </p>
+            <h3>Libraries</h3>
+                <ul>
+                    <li><a href="https://developer.android.com/tools/support-library/features.html">appcompat-v7</a></li>
+                    <li><a href="https://developer.android.com/tools/support-library/features.html">recyclerview-v7</a></li>
+                    <li><a href="https://developer.android.com/tools/support-library/features.html">cardview-v7</a></li>
+                    <li><a href="https://github.com/JakeWharton/timber">timber</a></li>
+                    <li><a href="https://github.com/FasterXML/jackson-databind/">jackson-databind</a></li>
+                    <li><a href="https://github.com/JakeWharton/butterknife">butterknife</a></li>
+                    <li><a href="https://github.com/futuresimple/android-floating-action-button">loatingactionbutton</a></li>
+                    <li><a href="https://github.com/rengwuxian/MaterialEditText">materialedittext</a></li>
+                </ul>
+            <br />
+            Logo design by <a href="https://www.freelancer.com/u/carlaschartner.html">Carla Schartner</a>
+        ]]>
+    </string>
 </resources>
