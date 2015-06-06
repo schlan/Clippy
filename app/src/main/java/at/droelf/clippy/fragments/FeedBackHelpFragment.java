@@ -3,14 +3,14 @@ package at.droelf.clippy.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.METValidator;
 import com.zendesk.sdk.feedback.impl.ZendeskFeedbackConnector;
@@ -23,6 +23,7 @@ import com.zendesk.service.ZendeskCallback;
 import at.droelf.clippy.R;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import timber.log.Timber;
 
 public class FeedBackHelpFragment extends Fragment {
 
@@ -93,7 +94,7 @@ public class FeedBackHelpFragment extends Fragment {
             zendeskFeedbackConnector.sendFeedback(feedback, null, createRequestZendeskCallback);
         }else{
             setLoading(false);
-            Toast.makeText(getActivity(), getString(R.string.support_textview_sent_error), Toast.LENGTH_LONG).show();
+            Snackbar.make(getView(), getString(R.string.support_textview_sent_error), Snackbar.LENGTH_LONG).show();
         }
 
     }
@@ -103,14 +104,14 @@ public class FeedBackHelpFragment extends Fragment {
 
         @Override
         public void onSuccess(CreateRequest o) {
-            Toast.makeText(getActivity(), getString(R.string.support_textview_sent), Toast.LENGTH_LONG).show();
+            Snackbar.make(getView(), getString(R.string.support_textview_sent), Snackbar.LENGTH_LONG).show();
             FeedBackHelpFragment.this.getActivity().finish();
         }
 
         @Override
         public void onError(ErrorResponse errorResponse) {
             setLoading(false);
-            Toast.makeText(getActivity(), getString(R.string.support_textview_sent_error), Toast.LENGTH_LONG).show();
+            Snackbar.make(getView(), getString(R.string.support_textview_sent_error), Snackbar.LENGTH_LONG).show();
         }
     });
 }

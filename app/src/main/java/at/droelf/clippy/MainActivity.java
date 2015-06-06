@@ -4,11 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -24,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.zendesk.sdk.rating.ui.RateMyAppDialog;
 
 import java.util.Arrays;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fabKill;
 
     @InjectView(R.id.main_fab_start)
-    FloatingActionButton fabStart;
+    android.support.design.widget.FloatingActionButton fabStart;
 
     @InjectView(R.id.main_fab_stop)
     FloatingActionButton fabStop;
@@ -133,22 +135,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFab(FloatingActionButton fab, boolean active, View.OnClickListener onClickListener){
+        fab.setBackgroundTintList(getStateList(active ? R.color.orange_900 : R.color.orange_400));
         fab.setEnabled(true);
         fab.setOnClickListener(onClickListener);
-        if(active){
-            fab.setColorNormal(getResources().getColor(R.color.orange_900));
-        }else{
-            fab.setColorNormal(getResources().getColor(R.color.orange_400));
-        }
     }
 
-    private void setFabVisible(boolean visible, FloatingActionButton... floatingActionButtons){
-        for(FloatingActionButton fab : floatingActionButtons){
-            if(visible){
-                fab.setEnabled(true);
-            } else{
-                fab.setEnabled(false);
-            }
+    private ColorStateList getStateList(int color){
+        int[][] states = new int[][] {
+                new int[] { }, // enabled
+        };
+
+        int[] colors = new int[] {
+                getResources().getColor(color)
+        };
+        return new ColorStateList(states, colors);
+    }
+
+    private void setFabVisible(boolean visible, FloatingActionButton... views){
+        for(FloatingActionButton fab : views){
+            fab.setBackgroundTintList(getStateList(visible ? R.color.orange_400 : R.color.gray_400));
         }
     }
 
