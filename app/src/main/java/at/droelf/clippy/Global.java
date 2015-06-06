@@ -35,8 +35,8 @@ public enum Global {
         this.settingsStorage = new SettingsStorage(context);
 
         //TODO
-        this.logTree = new Timber.DebugTree();
-        Logger.setLoggable(true);
+        this.logTree = releaseTree;
+        Logger.setLoggable(false);
 
         initZendesk(context);
         init = true;
