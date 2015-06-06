@@ -19,9 +19,11 @@ import com.zendesk.sdk.storage.SdkStorage;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import at.droelf.clippy.fragments.FeedBackHelpFragment;
 import at.droelf.clippy.fragments.UserHelpFragment;
+import at.droelf.clippy.utils.StringUtils;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import timber.log.Timber;
@@ -99,7 +101,14 @@ public class HelpActivity extends AppCompatActivity {
             }
 
             @Override
-            public String getAdditionalInfo() { return null; }
+            public String getAdditionalInfo() {
+                final Map<String, String> deviceInfoAsMap = deviceInfo.getDeviceInfoAsMap();
+                final StringBuilder info = new StringBuilder();
+                for(Map.Entry<String, String> entry : deviceInfoAsMap.entrySet()){
+                    info.append(String.format(Locale.US, "%s: %s%s",entry.getKey(), entry.getValue(), com.zendesk.util.StringUtils.LINE_SEPARATOR));
+                }
+                return info.toString();
+            }
 
             @Override
             public String getRequestSubject() {
