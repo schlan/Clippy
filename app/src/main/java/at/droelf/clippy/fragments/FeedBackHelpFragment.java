@@ -15,9 +15,10 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.METValidator;
 import com.zendesk.sdk.feedback.impl.ZendeskFeedbackConnector;
 import com.zendesk.sdk.model.CreateRequest;
-import com.zendesk.sdk.model.network.ErrorResponse;
-import com.zendesk.sdk.network.impl.ZendeskCallback;
 import com.zendesk.sdk.network.impl.ZendeskConfig;
+import com.zendesk.service.ErrorResponse;
+import com.zendesk.service.SafeZendeskCallback;
+import com.zendesk.service.ZendeskCallback;
 
 import at.droelf.clippy.R;
 import butterknife.ButterKnife;
@@ -65,6 +66,12 @@ public class FeedBackHelpFragment extends Fragment {
         return inflate;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        createRequestZendeskCallback.cancel();
+    }
+
     private void setLoading(boolean loading){
         if(loading){
             userFeedBackEditText.setEnabled(false);
@@ -92,7 +99,7 @@ public class FeedBackHelpFragment extends Fragment {
     }
 
 
-    private final ZendeskCallback<CreateRequest> createRequestZendeskCallback = new ZendeskCallback<CreateRequest>(){
+    private final SafeZendeskCallback<CreateRequest> createRequestZendeskCallback = SafeZendeskCallback.from(new ZendeskCallback<CreateRequest>(){
 
         @Override
         public void onSuccess(CreateRequest o) {
@@ -105,5 +112,5 @@ public class FeedBackHelpFragment extends Fragment {
             setLoading(false);
             Toast.makeText(getActivity(), getString(R.string.support_textview_sent_error), Toast.LENGTH_LONG).show();
         }
-    };
+    });
 }

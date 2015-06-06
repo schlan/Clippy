@@ -293,7 +293,10 @@ public class AgentControllerImpl implements AgentController{
             );
 
             if(animationIsRunning.get() && !killed && !isMute.get()){
-                MediaPlayer.create(AgentControllerImpl.this.context, sound).start();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(AgentControllerImpl.this.context, sound);
+                if (mediaPlayer != null) {
+                    mediaPlayer.start();
+                }
             }
         }
     }

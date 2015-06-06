@@ -2,7 +2,7 @@ package at.droelf.clippy;
 
 import android.content.Context;
 
-import com.zendesk.sdk.logger.Logger;
+import com.zendesk.logger.Logger;
 import com.zendesk.sdk.network.impl.ZendeskConfig;
 
 import at.droelf.clippy.backend.AgentService;
@@ -34,8 +34,9 @@ public enum Global {
         this.agentStorage = new AgentStorage(context);
         this.settingsStorage = new SettingsStorage(context);
 
-        this.logTree = releaseTree;
-        Logger.setLoggable(false);
+        //TODO
+        this.logTree = new Timber.DebugTree();
+        Logger.setLoggable(true);
 
         initZendesk(context);
         init = true;

@@ -59,7 +59,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 WebView webView = new WebView(getActivity());
                 webView.loadDataWithBaseURL(null, getString(R.string.setting_credits_text), "text/html", "utf-8", null);
 
-//                msg.setText(getText(R.string.setting_credits_text));
                 final AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setView(webView)
                         .setCancelable(true)
