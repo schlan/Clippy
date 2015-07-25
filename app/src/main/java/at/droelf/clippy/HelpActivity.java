@@ -23,19 +23,18 @@ import java.util.Map;
 
 import at.droelf.clippy.fragments.FeedBackHelpFragment;
 import at.droelf.clippy.fragments.UserHelpFragment;
-import at.droelf.clippy.utils.StringUtils;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import timber.log.Timber;
 
 public class HelpActivity extends AppCompatActivity {
 
     private ScreenState currentScreen;
 
-    @InjectView(R.id.help_fragemnt)
+    @Bind(R.id.help_fragemnt)
     FrameLayout fragmentContainer;
 
-    @InjectView(R.id.help_toolbar)
+    @Bind(R.id.help_toolbar)
     Toolbar toolbar;
 
 
@@ -43,7 +42,7 @@ public class HelpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {

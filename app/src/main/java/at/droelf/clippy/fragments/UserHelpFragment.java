@@ -20,17 +20,17 @@ import com.zendesk.sdk.network.impl.ZendeskConfig;
 import at.droelf.clippy.HelpActivity;
 import at.droelf.clippy.R;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 public class UserHelpFragment extends Fragment{
 
-    @InjectView(R.id.help_user_name)
+    @Bind(R.id.help_user_name)
     MaterialEditText userNameEditText;
 
-    @InjectView(R.id.help_user_email)
+    @Bind(R.id.help_user_email)
     MaterialEditText emailEditText;
 
-    @InjectView(R.id.help_user_reg_fab)
+    @Bind(R.id.help_user_reg_fab)
     FloatingActionButton fab;
 
     public static UserHelpFragment newInstance(){
@@ -43,7 +43,7 @@ public class UserHelpFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_help_user_registration, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

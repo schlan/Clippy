@@ -22,8 +22,7 @@ import com.zendesk.service.ZendeskCallback;
 
 import at.droelf.clippy.R;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import timber.log.Timber;
+import butterknife.Bind;
 
 public class FeedBackHelpFragment extends Fragment {
 
@@ -33,20 +32,20 @@ public class FeedBackHelpFragment extends Fragment {
         return feedBackHelpFragment;
     }
 
-    @InjectView(R.id.help_user_feedback_fab)
+    @Bind(R.id.help_user_feedback_fab)
     FloatingActionButton fab;
 
-    @InjectView(R.id.help_user_feedback)
+    @Bind(R.id.help_user_feedback)
     MaterialEditText userFeedBackEditText;
 
-    @InjectView(R.id.help_feedback_progress)
+    @Bind(R.id.help_feedback_progress)
     ProgressBar progressBar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View inflate = inflater.inflate(R.layout.fragment_help_feedback, container, false);
-        ButterKnife.inject(this, inflate);
+        ButterKnife.bind(this, inflate);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,12 +95,9 @@ public class FeedBackHelpFragment extends Fragment {
             setLoading(false);
             Snackbar.make(getView(), getString(R.string.support_textview_sent_error), Snackbar.LENGTH_LONG).show();
         }
-
     }
 
-
     private final SafeZendeskCallback<CreateRequest> createRequestZendeskCallback = SafeZendeskCallback.from(new ZendeskCallback<CreateRequest>(){
-
         @Override
         public void onSuccess(CreateRequest o) {
             Snackbar.make(getView(), getString(R.string.support_textview_sent), Snackbar.LENGTH_LONG).show();

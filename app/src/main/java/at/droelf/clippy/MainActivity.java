@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Handler;
@@ -34,32 +33,32 @@ import java.util.List;
 import at.droelf.clippy.model.AgentType;
 import at.droelf.clippy.utils.IntentHelper;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import timber.log.Timber;
 
 
 public class MainActivity extends AppCompatActivity {
 
 
-    @InjectView(R.id.agent_list)
+    @Bind(R.id.agent_list)
     RecyclerView recyclerView;
 
-    @InjectView(R.id.agent_list_toolbar)
+    @Bind(R.id.agent_list_toolbar)
     Toolbar toolbar;
 
-    @InjectView(R.id.main_fab_kill)
+    @Bind(R.id.main_fab_kill)
     FloatingActionButton fabKill;
 
-    @InjectView(R.id.main_fab_start)
+    @Bind(R.id.main_fab_start)
     android.support.design.widget.FloatingActionButton fabStart;
 
-    @InjectView(R.id.main_fab_stop)
+    @Bind(R.id.main_fab_stop)
     FloatingActionButton fabStop;
 
-    @InjectView(R.id.main_fab_mute)
+    @Bind(R.id.main_fab_mute)
     FloatingActionButton fabMute;
 
-    @InjectView(R.id.main_fab_unmute)
+    @Bind(R.id.main_fab_unmute)
     FloatingActionButton fabUnmute;
 
 
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         setSupportActionBar(toolbar);
@@ -287,15 +286,15 @@ public class MainActivity extends AppCompatActivity {
 
     class AgentAdapterViewHolder extends RecyclerView.ViewHolder{
 
-        @InjectView(R.id.agent_image)
+        @Bind(R.id.agent_image)
         ImageView imageView;
 
-        @InjectView(R.id.card_view)
+        @Bind(R.id.card_view)
         CardView cardView;
 
         public AgentAdapterViewHolder(View v) {
             super(v);
-            ButterKnife.inject(this, v);
+            ButterKnife.bind(this, v);
         }
 
         public ImageView getImageView(){

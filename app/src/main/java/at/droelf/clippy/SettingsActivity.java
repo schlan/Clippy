@@ -6,19 +6,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import at.droelf.clippy.fragments.SettingsFragment;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    @InjectView(R.id.settings_toolbar)
+    @Bind(R.id.settings_toolbar)
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
