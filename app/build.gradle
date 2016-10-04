@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "at.droelf.clippy"
@@ -11,6 +11,7 @@ android {
         versionCode 2
         versionName "1.0.1"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -22,19 +23,32 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:cardview-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
+    ext.supportLibVersion = '24.2.1'
+    ext.timberVersion = '3.1.0'
+    ext.jacksonVersion = '2.8.3'
+    ext.butterknifeVersion = '7.0.1'
+    ext.materialdittextLibraryVersion = '2.1.4'
+    ext.zendeskSdkVersion = '1.3.2.1'
 
-    compile 'com.jakewharton.timber:timber:3.1.0'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibVersion"
+    compile "com.android.support:cardview-v7:$supportLibVersion"
+    compile "com.android.support:design:$supportLibVersion"
 
-    compile 'com.rengwuxian.materialedittext:library:2.1.3'
+    compile "com.jakewharton.timber:timber:$timberVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile "com.jakewharton:butterknife:$butterknifeVersion"
 
-    compile group: 'com.zendesk', name: 'sdk', version: '1.3.2.1'
+    compile "com.rengwuxian.materialedittext:library:$materialdittextLibraryVersion"
+
+    compile group: 'com.zendesk', name: 'sdk', version: "$zendeskSdkVersion"
 }
